@@ -12,7 +12,6 @@
 </template>
 
 <script>
-
 import {mapActions, mapGetters} from 'vuex';
 
 export default {
@@ -34,8 +33,7 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
+<style scoped="scoped" lang="scss">
 
 $d : 10px;
 

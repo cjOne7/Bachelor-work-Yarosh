@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1>Page not found</h1>
-    <p>You will be redirected in {{ timeToLeave }}</p>
+    <p>You will be redirected to home page in {{ timeToLeave }}</p>
   </div>
 </template>
 
