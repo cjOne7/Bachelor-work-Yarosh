@@ -13,6 +13,11 @@ export default new VueRouter({
             path: '/',
             component: () => import('@/components/Home'),
             name: 'Home'
+        },
+        {
+            path: '/user/:name',
+            component: () => import('@/components/User'),
+            name: 'User'
         }
     ]
 });

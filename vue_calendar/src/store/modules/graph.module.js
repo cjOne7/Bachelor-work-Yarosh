@@ -20,8 +20,10 @@ export default {
             return await context.state.graphClient.api(path).select(queryParams).orderby(orderByParams).get();
         },
         async receiveUserInfo({state, commit}) {
-            const user = await state.graphClient.api('/me').get();
-            commit('setUser', user);
+            if (state.graphClient instanceof Client) {
+                const user = await state.graphClient.api('/me').get();
+                commit('setUser', user);
+            }
         }
     },
     getters: {
