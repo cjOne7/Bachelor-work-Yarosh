@@ -1,47 +1,42 @@
 <template>
   <div>
-    <div>
+    <div class="cont">
       <b-jumbotron header="BootstrapVue" lead="Bootstrap v4 Components for Vue.js 2">
-        <p>For more information visit website</p>
-        <b-button variant="primary" href="#" v-if="getAuthenticationState" @click="logout">Logout</b-button>
-        <b-button variant="primary" href="#" v-else @click="login">Login</b-button>
+        <div v-if="getAuthenticationState">
+          <p>Welcome, {{ getAuthResult.account.name }}!</p>
+          <b-button variant="primary" href="#" @click="logout">
+            <Logout/>
+          </b-button>
+        </div>
+        <b-button variant="primary" href="#" v-else>
+          <Login/>
+        </b-button>
       </b-jumbotron>
     </div>
     <div>
-      <h1 class="header1" v-if="getAuthenticationState">Hello {{ getAuthResult.account.name }}</h1>
       <p>{{ getAuthenticationState }}</p>
     </div>
   </div>
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex';
+import {mapGetters} from 'vuex';
+import Login from "@/components/Login";
+import Logout from "@/components/Logout";
 
 export default {
   name: 'Home',
+  components: {Logout, Login},
   computed: {
     ...mapGetters(['getAuthenticationState', 'getAuthResult', 'getUser'])
   },
-  methods: {
-    ...mapActions(['signIn', 'signOut', 'receiveUserInfo']),
-    async login() {
-      await this.signIn();
-      await this.receiveUserInfo();
-      console.log(this.getUser);
-    },
-    async logout() {
-      await this.signOut();
-    }
-  }
+  methods: {}
 }
 </script>
 
-<style scoped="scoped" lang="scss">
-$d : 10px;
-
-.header1 {
-  margin           : $d;
-  background-color : $body-bg;
-  color            : $body-color;
+<style scoped lang="scss">
+.cont {
+  margin : auto;
+  width  : 80%;
 }
 </style>
