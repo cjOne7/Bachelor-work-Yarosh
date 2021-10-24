@@ -7,14 +7,16 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item v-if="getAuthenticationState" @click="redirectToCalendar">Calendar</b-nav-item>
+          <b-nav-item :to="{name: 'Calendar', params: {name: this.getAuthResult.account.name}}"
+                      v-if="getAuthenticationState">Calendar
+          </b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown v-if="getAuthenticationState" text="User" right>
             <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#" @click="logout">
+            <b-dropdown-item href="#">
               <Logout/>
             </b-dropdown-item>
           </b-nav-item-dropdown>
@@ -36,13 +38,9 @@ export default {
   name: "Navbar",
   components: {Logout, Login},
   computed: {
-    ...mapGetters(["getUser", "getAuthenticationState"])
+    ...mapGetters(["getUser", "getAuthenticationState", "getAuthResult"])
   },
-  methods: {
-    redirectToCalendar() {
-
-    }
-  }
+  methods: {}
 }
 </script>
 

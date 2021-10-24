@@ -21,7 +21,6 @@ export default {
         this.$router.push({name: 'Home'});
       }
     }, 1000);
-
   }
 }
 </script>

@@ -1,19 +1,14 @@
 <template>
   <div id="app">
-    <Navbar/>
-    <router-view/>
+<!--        <router-view/>-->
+    <router-view name="navbar"/>
+    <router-view name="home"/>
   </div>
 </template>
 
 <script>
-import Navbar from "@/components/Navbar";
 
 export default {
-  name: 'App',
-  components: {Navbar}
+  name: 'App'
 }
 </script>
-
-<style scoped>
-
-</style>

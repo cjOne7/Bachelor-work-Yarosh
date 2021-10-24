@@ -1,14 +1,12 @@
 <template>
   <div>
-    <Navbar/>
+    <h1>Calendar</h1>
   </div>
 </template>
 
 <script>
-import Navbar from "@/components/Navbar";
 export default {
-  name: "User",
-  components: {Navbar}
+  name: "Calendar"
 }
 </script>
 

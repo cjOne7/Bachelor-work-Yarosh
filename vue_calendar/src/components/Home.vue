@@ -1,34 +1,31 @@
 <template>
   <div>
+<!--    <Navbar/>-->
     <div class="cont">
-      <b-jumbotron header="BootstrapVue" lead="Bootstrap v4 Components for Vue.js 2">
-        <div v-if="getAuthenticationState">
-          <p>Welcome, {{ getAuthResult.account.name }}!</p>
-          <b-button variant="primary" href="#" @click="logout">
-            <Logout/>
-          </b-button>
-        </div>
-        <b-button variant="primary" href="#" v-else>
-          <Login/>
-        </b-button>
-      </b-jumbotron>
+      <router-view name="jumbotron"/>
+<!--      <Jumbotron/>-->
     </div>
-    <div>
-      <p>{{ getAuthenticationState }}</p>
-    </div>
+    <router-link v-if="getAuthenticationState" :to="{name: 'Profile'}">to profile</router-link>
+<!--    <router-view/>-->
+    <router-view name="profile"/>
+    <router-view name="calendar"/>
   </div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex';
-import Login from "@/components/Login";
-import Logout from "@/components/Logout";
+// import Navbar from "@/components/Navbar";
+// eslint-disable-next-line no-unused-vars
+import Jumbotron from "@/components/Jumbotron";
 
 export default {
   name: 'Home',
-  components: {Logout, Login},
+  components: {
+    // Jumbotron,
+    // Navbar
+  },
   computed: {
-    ...mapGetters(['getAuthenticationState', 'getAuthResult', 'getUser'])
+    ...mapGetters(['getAuthenticationState', 'getAuthResult'])
   },
   methods: {}
 }

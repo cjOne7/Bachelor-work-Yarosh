@@ -10,9 +10,9 @@ export default {
   methods: {
     ...mapActions(['signIn', 'receiveUserInfo']),
     async login() {
-      await this.signIn();
-      await this.receiveUserInfo();
-      console.log(this.getUser);
+      this.signIn()
+          .then(() => this.receiveUserInfo());
+      // console.log(this.getUser);
     }
   }
 }
