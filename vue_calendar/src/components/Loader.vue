@@ -1,0 +1,69 @@
+<template>
+  <div class="loader-wrapper">
+    <div class="lds-ring">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Loader"
+}
+</script>
+
+<style scoped lang="scss">
+$ring-radius : 250px;
+$ring-color  : #cef;
+$delay       : -0.15s;
+
+.loader-wrapper {
+  display         : flex;
+  justify-content : center;
+  align-items     : center;
+  height          : 50vh;
+
+  .lds-ring {
+    display  : inline-block;
+    position : relative;
+    width    : 250px;
+
+    div {
+      box-sizing    : border-box;
+      display       : block;
+      position      : absolute;
+      width         : $ring-radius;
+      height        : $ring-radius;
+      margin        : $indent * 2;
+      border        : 15px solid $ring-color;
+      border-radius : 50%;
+      animation     : lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+      border-color  : $ring-color transparent transparent transparent;
+
+      &:nth-child(1) {
+        animation-delay : $delay * 3;
+      }
+
+      &:nth-child(2) {
+        animation-delay : $delay * 2;
+      }
+
+      &:nth-child(3) {
+        animation-delay : $delay;
+      }
+    }
+  }
+}
+
+@keyframes lds-ring {
+  0% {
+    transform : rotate(0deg);
+  }
+  100% {
+    transform : rotate(360deg);
+  }
+}
+</style>

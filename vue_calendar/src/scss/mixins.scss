@@ -1,0 +1,9 @@
+@mixin mx($value) {
+  margin-left  : $value;
+  margin-right : $value;
+}
+
+@mixin my($value) {
+  margin-top    : $value;
+  margin-bottom : $value;
+}
