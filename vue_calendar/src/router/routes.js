@@ -22,7 +22,7 @@ export default new VueRouter({
     routes: [
         {
             path: '*',
-            component: () => import('@/components/NotFound')
+            component: () => import('@/components/NotFound'),
         },
         {
             path: '/',
