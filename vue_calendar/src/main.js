@@ -10,6 +10,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue);
+Vue.use(require('vue-moment'));
 
 Vue.config.productionTip = false;
 
