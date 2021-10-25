@@ -1,29 +1,22 @@
 <template>
   <tr>
-    <td>
-      {{ event.subject }}
-    </td>
-    <td>
-      {{ event.bodyPreview }}
-    </td>
-    <td>
-      {{ event.attendees | stylizeAttendees }}
-    </td>
-    <td>
-      {{ event.organizer.emailAddress.name }}
-    </td>
-    <td>
-      {{ event.start.dateTime | moment('DD.MM.YYYY HH:mm Z') }}
-    </td>
-    <td>
-      {{ event.end.dateTime | moment('DD.MM.YYYY HH:mm Z') }}
-    </td>
+    <td>{{ event.subject }}</td>
+    <td>{{ event.bodyPreview }}</td>
+    <td>{{ event.attendees | stylizeAttendees }}</td>
+    <td>{{ event.organizer.emailAddress.name }}</td>
+    <td>{{ event.start.dateTime | moment(datePattern) }}</td>
+    <td>{{ event.end.dateTime | moment(datePattern) }}</td>
   </tr>
 </template>
 
 <script>
 export default {
   name: "CalendarItem",
+  data() {
+    return {
+      datePattern: 'DD.MM.YYYY HH:mm Z'
+    }
+  },
   props: {
     event: {
       type: Object,
@@ -32,7 +25,6 @@ export default {
   },
   filters: {
     stylizeAttendees: value => {
-      console.log(value);
       if (value.length) {
         let attendees = [];
         for (let i = 0; i < value.length; i++) {
