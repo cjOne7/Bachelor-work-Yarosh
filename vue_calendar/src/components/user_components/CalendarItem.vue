@@ -32,13 +32,15 @@ export default {
   },
   filters: {
     stylizeAttendees: value => {
-      console.log(value.length)
+      console.log(value);
       if (value.length) {
-        return '-';
-      } else {
-        // return value.emailAddress.address;
-        return '---';
+        let attendees = [];
+        for (let i = 0; i < value.length; i++) {
+          attendees.push(value[i].emailAddress.name);
+        }
+        return attendees.join(", ");
       }
+      return '-';
     }
   }
 }
