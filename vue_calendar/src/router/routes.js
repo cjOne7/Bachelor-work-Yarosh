@@ -2,10 +2,10 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '@/store';
 import Navbar from "@/components/Navbar";
+import Calendar from "@/components/user_components/Calendar";
+import Profile from "@/components/user_components/Profile";
+// import Jumbotron from "@/components/Jumbotron";
 import Home from "@/components/Home";
-import Calendar from "@/components/Calendar";
-import Profile from "@/components/Profile";
-import Jumbotron from "@/components/Jumbotron";
 
 Vue.use(VueRouter);
 
@@ -26,12 +26,8 @@ export default new VueRouter({
         },
         {
             path: '/',
-            component: Home,
-            name: 'Home',
-            components: {
-                navbar: Navbar,
-                home: Home
-            },
+            component: Navbar,
+            name: 'Navbar',
             children: [
                 {
                     path: 'profile',
@@ -53,9 +49,10 @@ export default new VueRouter({
                 },
                 {
                     path: '',
-                    component: Home,
+                    component: Navbar,
+                    name: 'Home',
                     components: {
-                        jumbotron: Jumbotron
+                        home: Home
                     }
                 }
             ]

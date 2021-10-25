@@ -24,6 +24,10 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
+
+    <router-view name="home"/>
+    <router-view name="profile"/>
+    <router-view name="calendar"/>
   </div>
 </template>
 
@@ -40,7 +44,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

@@ -18,7 +18,7 @@ export default {
       this.timeToLeave--;
       if (this.timeToLeave === 0) {
         clearInterval(interval);
-        this.$router.push({name: 'Home'});
+        this.$router.push({name: 'Jumbotron'});
       }
     }, 1000);
   }
