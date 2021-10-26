@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '@/store';
 import Navbar from "@/components/Navbar";
-import Calendar from "@/components/user_components/Calendar";
+import Calendar from "@/components/user_components/calendar/Calendar";
 import Profile from "@/components/user_components/Profile";
 // import Jumbotron from "@/components/Jumbotron";
 import Home from "@/components/Home";

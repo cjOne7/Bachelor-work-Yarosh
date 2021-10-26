@@ -2,7 +2,7 @@
   <tr>
     <td>{{ event.subject }}</td>
     <td>{{ event.bodyPreview }}</td>
-    <td>{{ event.attendees | stylizeAttendees }}</td>
+    <td>{{ event.attendees | trimAttendees }}</td>
     <td>{{ event.organizer.emailAddress.name }}</td>
     <td>{{ event.start.dateTime | moment(datePattern) }}</td>
     <td>{{ event.end.dateTime | moment(datePattern) }}</td>
@@ -24,7 +24,7 @@ export default {
     }
   },
   filters: {
-    stylizeAttendees: value => {
+    trimAttendees: value => {
       if (value.length) {
         let attendees = [];
         for (let i = 0; i < value.length; i++) {

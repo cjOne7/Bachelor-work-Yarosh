@@ -24,7 +24,7 @@ $delay       : -0.15s;
   display         : flex;
   justify-content : center;
   align-items     : center;
-  height          : 50vh;
+  height          : 30vh;
 
   .lds-ring {
     display  : inline-block;

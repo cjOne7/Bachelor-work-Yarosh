@@ -1,4 +1,6 @@
 <template>
+  <!--    https://bootstrap-vue.org/docs/components/table#tables-->
+  <!--    <b-table striped hover :items="items" :fields="fields"></b-table>-->
   <div>
     <Loader v-if="loading"/>
     <table v-else-if="events.length">
@@ -16,18 +18,17 @@
       <CalendarItem v-for="event in events" :key="event.id" :event="event"/>
       </tbody>
     </table>
-    <b-button variant="primary" class="m-1">Add new event</b-button>
   </div>
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex';
-import CalendarItem from "@/components/user_components/CalendarItem";
+import {mapActions} from "vuex";
+import CalendarItem from "@/components/user_components/calendar/CalendarItem";
 import Loader from "@/components/Loader";
 
 export default {
-  name: "Calendar",
-  components: {Loader, CalendarItem},
+  name: "CalendarTable",
+  components: {CalendarItem, Loader},
   data() {
     return {
       events: [],
@@ -35,22 +36,19 @@ export default {
       loading: true
     }
   },
-  computed: {
-    ...mapGetters(["getGraphClient", "getUser", "getTimeZone"])
-  },
   methods: {
     ...mapActions(["callMsGraphApi"])
   },
   async mounted() {
     const queryOptions = {
       path: '/me/events',
-      selectedParams: this.fields.join(),
+      selectedParams: 'subject,bodyPreview,attendees,organizer,start,end',
       orderByParams: 'createdDateTime DESC'
     };
     this.callMsGraphApi(queryOptions).then(resp => {
       this.events = resp.value;
       this.loading = false;
-    });
+    }).catch(err => console.log(err));
   }
 }
 </script>
@@ -60,6 +58,7 @@ table {
   border          : $border;
   border-collapse : collapse;
 
+
   tr {
     vertical-align : top;
 
@@ -68,7 +67,7 @@ table {
     }
 
     &:nth-child(even) {
-      background-color : antiquewhite;
+      //background-color : antiquewhite;
     }
 
     &:hover {
@@ -77,9 +76,10 @@ table {
   }
 
   th {
-    background-color : antiquewhite;
+    //background-color : antiquewhite;
     border           : $border;
     padding          : $indent;
+    min-width: 200px;
   }
 }
 </style>
