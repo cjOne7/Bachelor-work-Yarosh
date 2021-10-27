@@ -8,6 +8,7 @@
       </transition>
 
       <transition name="fade" mode="out-in" appear>
+        <!--todo update list of events when event has been added-->
         <keep-alive>
           <component :is="currentOption" @show-calendar-events="showCalendarEvents"/>
         </keep-alive>
@@ -18,7 +19,7 @@
 
 <script>
 import CalendarTable from "@/components/user_components/calendar/CalendarTable";
-import AddEventForm from "@/components/user_components/calendar/AddEventForm";
+import AddEventForm from "@/components/user_components/calendar/form/AddEventForm";
 
 export default {
   name: "Calendar",

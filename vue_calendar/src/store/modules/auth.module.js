@@ -32,9 +32,8 @@ export default {
         async signIn({commit, state}) {
             state.msalInstance = new PublicClientApplication(state.config);
             await state.msalInstance.loginPopup(state.loginRequest)
-                .then(async loginResponse => {
+                .then(loginResponse => {
                     commit('setAuthResult', loginResponse);
-                    // console.log(loginResponse);
                     commit('changeAuthState');
                     commit('setGraphClient', loginResponse.accessToken);
                 })
@@ -45,7 +44,8 @@ export default {
                 account: state.msalInstance.getAccountByUsername(state.authResult.account.username),
                 mainWindowRedirectUri: state.config.auth.redirectUri
             }
-            await state.msalInstance.logoutPopup(logoutRequest).then(() => commit('changeAuthState'))
+            await state.msalInstance.logoutPopup(logoutRequest)
+                .then(() => commit('changeAuthState'))
                 .catch(err => console.log(err));
         }
     },

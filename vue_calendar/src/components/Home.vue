@@ -15,7 +15,7 @@ export default {
   name: 'Home',
   components: {Jumbotron},
   computed: {
-    ...mapGetters(['getAuthenticationState', 'getAuthResult'])
+    ...mapGetters(['getAuthenticationState'])
   }
 }
 </script>
