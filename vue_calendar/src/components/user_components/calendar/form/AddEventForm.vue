@@ -4,52 +4,55 @@
       <!--      <b-form-group label="Subject:" label-for="subject-input" valid-feedback="Correct!">-->
       <!--        <b-form-input id="subject-input" v-model.trim="event.subject" placeholder="Enter subject"></b-form-input>-->
       <!--      </b-form-group>-->
-      <InputForm :label="'Subject:'" :inputID="'subject-input'" :placeholder="'Enter subject'"
-                 @transfer-input-field="setSubjectValue"/>
-
       <!--      <b-form-group label="Location:" label-for="location-input">-->
       <!--        <b-form-input id="location-input" v-model.trim="event.location.displayName"-->
       <!--                      placeholder="Enter location"></b-form-input>-->
       <!--      </b-form-group>-->
-      <InputForm :label="'Location:'" :inputID="'location-input'" :placeholder="'Enter location'"
-                 @transfer-input-field="setLocationValue"/>
-
       <!--      <b-form-group label="Attendees:" label-for="attendees-input">-->
       <!--        <b-form-input id="attendees-input" v-model.trim="attendees" placeholder="Add attendees"></b-form-input>-->
       <!--      </b-form-group>-->
+      <!--      <div class="time-container">-->
+      <!--        <div class="inline-time-block">-->
+      <!--          <b-form-group label="Choose a start date:" label-for="datepicker-input-1">-->
+      <!--            <b-form-datepicker id="datepicker-input-1" v-model="startDate"></b-form-datepicker>-->
+      <!--          </b-form-group>-->
+      <!--        </div>-->
+      <!--        <div class="inline-time-block">-->
+      <!--          <b-form-group label="Choose a start time:" label-for="timepicker-input-1">-->
+      <!--            <b-form-timepicker id="timepicker-input-1" v-model="startTime"></b-form-timepicker>-->
+      <!--          </b-form-group>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!--      <div class="time-container">-->
+      <!--        <div class="inline-time-block">-->
+      <!--          <b-form-group label="Choose an end date:" label-for="datepicker-input-2">-->
+      <!--            <b-form-datepicker id="datepicker-input-2" v-model="endDate"></b-form-datepicker>-->
+      <!--          </b-form-group>-->
+      <!--        </div>-->
+      <!--        <div class="inline-time-block">-->
+      <!--          <b-form-group label="Choose an end time:" label-for="timepicker-input-2">-->
+      <!--            <b-form-timepicker id="timepicker-input-2" v-model="endTime"></b-form-timepicker>-->
+      <!--          </b-form-group>-->
+      <!--        </div>-->
+      <!--      </div>-->
+
+
+      <InputForm :label="'Subject:'" :inputID="'subject-input'" :placeholder="'Enter subject'"
+                 @transfer-input-field="setSubjectValue"/>
+      <InputForm :label="'Location:'" :inputID="'location-input'" :placeholder="'Enter location'"
+                 @transfer-input-field="setLocationValue"/>
 
       <div class="time-container">
         <DatePicker :label="'Choose a start date:'" :inputID="'datepicker-input-1'"
                     @transfer-input-field="setStartDayValue"/>
-        <!--        <div class="inline-time-block">-->
-        <!--          <b-form-group label="Choose a start date:" label-for="datepicker-input-1">-->
-        <!--            <b-form-datepicker id="datepicker-input-1" v-model="startDate"></b-form-datepicker>-->
-        <!--          </b-form-group>-->
-        <!--        </div>-->
         <TimePicker :label="'Choose a start time:'" :inputID="'timepicker-input-1'"
                     @transfer-input-field="setStartTimeValue"/>
-        <!--        <div class="inline-time-block">-->
-        <!--          <b-form-group label="Choose a start time:" label-for="timepicker-input-1">-->
-        <!--            <b-form-timepicker id="timepicker-input-1" v-model="startTime"></b-form-timepicker>-->
-        <!--          </b-form-group>-->
-        <!--        </div>-->
       </div>
 
       <div class="time-container">
-        <DatePicker :label="'Choose an end date:'" :inputID="'datepicker-input-2'"
-                    @transfer-input-field="setEndDayValue"/>
-        <!--        <div class="inline-time-block">-->
-        <!--          <b-form-group label="Choose an end date:" label-for="datepicker-input-2">-->
-        <!--            <b-form-datepicker id="datepicker-input-2" v-model="endDate"></b-form-datepicker>-->
-        <!--          </b-form-group>-->
-        <!--        </div>-->
+        <DatePicker :label="'Choose an end date:'" :inputID="'datepicker-input-2'" @transfer-input-field="setEndDayValue"/>
         <TimePicker :label="'Choose an end time:'" :inputID="'timepicker-input-2'"
                     @transfer-input-field="setEndTimeValue"/>
-        <!--        <div class="inline-time-block">-->
-        <!--          <b-form-group label="Choose an end time:" label-for="timepicker-input-2">-->
-        <!--            <b-form-timepicker id="timepicker-input-2" v-model="endTime"></b-form-timepicker>-->
-        <!--          </b-form-group>-->
-        <!--        </div>-->
       </div>
 
       <b-form-group label="Enter content:" label-for="body-textarea">
@@ -72,7 +75,6 @@ import TimePicker from "@/components/user_components/calendar/form/TimePicker";
 
 export default {
   name: "AddEventForm",
-  // eslint-disable-next-line vue/no-unused-components
   components: {TimePicker, DatePicker, InputForm},
   data() {
     return {
@@ -150,13 +152,13 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 .time-container {
   display         : flex;
   justify-content : space-between;
 }
 
-.inline-time-block {
-  min-width : 48%;
-}
+/*.inline-time-block {*/
+/*  min-width : 48%;*/
+/*}*/
 </style>
