@@ -2,7 +2,8 @@
   <div>
     <b-form @submit.prevent="createNewEvent">
       <b-form-group label="Subject:" label-for="subject-input">
-        <b-form-input id="subject-input" v-model.trim="event.subject" placeholder="Enter subject"></b-form-input>
+        <b-form-input id="subject-input" v-model.trim="event.subject" placeholder="Enter subject"
+                      required></b-form-input>
       </b-form-group>
 
       <b-form-group label="Location:" label-for="location-input">
@@ -17,13 +18,13 @@
       <div class="time-container">
         <div class="inline-time-block">
           <b-form-group label="Choose a start date:" label-for="datepicker-input-1">
-            <b-form-datepicker id="datepicker-input-1" v-model="startDate"></b-form-datepicker>
+            <b-form-datepicker id="datepicker-input-1" v-model="startDate" required></b-form-datepicker>
           </b-form-group>
         </div>
 
         <div class="inline-time-block">
           <b-form-group label="Choose a start time:" label-for="timepicker-input-1">
-            <b-form-timepicker id="timepicker-input-1" v-model="startTime"></b-form-timepicker>
+            <b-form-timepicker id="timepicker-input-1" v-model="startTime" required></b-form-timepicker>
           </b-form-group>
         </div>
       </div>
@@ -31,20 +32,20 @@
       <div class="time-container">
         <div class="inline-time-block">
           <b-form-group label="Choose an end date:" label-for="datepicker-input-2">
-            <b-form-datepicker id="datepicker-input-2" v-model="endDate"></b-form-datepicker>
+            <b-form-datepicker id="datepicker-input-2" v-model="endDate" required></b-form-datepicker>
           </b-form-group>
         </div>
 
         <div class="inline-time-block">
           <b-form-group label="Choose an end time:" label-for="timepicker-input-2">
-            <b-form-timepicker id="timepicker-input-2" v-model="endTime"></b-form-timepicker>
+            <b-form-timepicker id="timepicker-input-2" v-model="endTime" required></b-form-timepicker>
           </b-form-group>
         </div>
       </div>
 
       <b-form-group label="Enter content:" label-for="body-textarea">
         <b-form-textarea id="body-textarea" v-model.trim="event.body.content" placeholder="Enter content" rows="4"
-                         max-rows="8"></b-form-textarea>
+                         max-rows="8" required></b-form-textarea>
       </b-form-group>
 
       <b-button variant="primary" type="submit" class="my-1 mr-2">Confirm</b-button>
@@ -88,7 +89,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getTimeZone"])
+    ...mapGetters(["getTimeZone", "getGraphClient"])
   },
   methods: {
     createNewEvent() {
@@ -98,6 +99,7 @@ export default {
       this.event.endDate.dateTime = `${this.endDate}T${this.endTime}`;
       this.event.attendees = this.attendees.split(", ");
       console.log(this.event);
+      this.getGraphClient.api('/me/events').post(this.event);
     }
   }
 
