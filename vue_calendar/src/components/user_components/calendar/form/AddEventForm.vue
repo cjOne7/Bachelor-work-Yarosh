@@ -36,23 +36,19 @@
       <!--        </div>-->
       <!--      </div>-->
 
-
       <InputForm :label="'Subject:'" :inputID="'subject-input'" :placeholder="'Enter subject'"
                  @transfer-input-field="setSubjectValue"/>
       <InputForm :label="'Location:'" :inputID="'location-input'" :placeholder="'Enter location'"
                  @transfer-input-field="setLocationValue"/>
 
       <div class="time-container">
-        <DatePicker :label="'Choose a start date:'" :inputID="'datepicker-input-1'"
-                    @transfer-input-field="setStartDayValue"/>
-        <TimePicker :label="'Choose a start time:'" :inputID="'timepicker-input-1'"
-                    @transfer-input-field="setStartTimeValue"/>
+        <DatePicker :label="'Choose a start date:'" :inputID="'datepicker-input-1'" @transfer-input-field="setStartDayValue"/>
+        <TimePicker :label="'Choose a start time:'" :inputID="'timepicker-input-1'" @transfer-input-field="setStartTimeValue"/>
       </div>
 
       <div class="time-container">
         <DatePicker :label="'Choose an end date:'" :inputID="'datepicker-input-2'" @transfer-input-field="setEndDayValue"/>
-        <TimePicker :label="'Choose an end time:'" :inputID="'timepicker-input-2'"
-                    @transfer-input-field="setEndTimeValue"/>
+        <TimePicker :label="'Choose an end time:'" :inputID="'timepicker-input-2'" @transfer-input-field="setEndTimeValue"/>
       </div>
 
       <b-form-group label="Enter content:" label-for="body-textarea">
@@ -154,8 +150,8 @@ export default {
 
 <style scoped>
 .time-container {
-  display         : flex;
-  justify-content : space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 /*.inline-time-block {*/
