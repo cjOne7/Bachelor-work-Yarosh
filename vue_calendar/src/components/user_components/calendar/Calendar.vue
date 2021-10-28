@@ -3,7 +3,8 @@
     <div class="table-wrapper">
       <h1>Calendar</h1>
       <transition name="fade" appear>
-        <b-button v-show="isHidden" variant="primary" class="my-1" @click="showAddingNewEventForm">Add new event
+        <b-button v-show="isHidden" variant="primary" class="my-1" @click="showAddingNewEventForm">
+          Add new event
         </b-button>
       </transition>
 
@@ -77,5 +78,4 @@ table {
     padding : $indent;
   }
 }
-
 </style>

@@ -42,9 +42,9 @@ export default {
   components: {DateTimePicker, InputForm},
   data() {
     return {
-      startDate: '',
+      startDay: '',
       startTime: '',
-      endDate: '',
+      endDay: '',
       endTime: '',
       // attendees: '',
       event: {
@@ -92,13 +92,13 @@ export default {
       this.event.location.displayName = newValue;
     },
     setStartDayValue(newValue) {
-      this.startDate = newValue;
+      this.startDay = newValue;
     },
     setStartTimeValue(newValue) {
       this.startTime = newValue;
     },
     setEndDayValue(newValue) {
-      this.endDate = newValue;
+      this.endDay = newValue;
     },
     setEndTimeValue(newValue) {
       this.endTime = newValue;
@@ -109,8 +109,8 @@ export default {
     async createNewEvent() {
       this.event.start.timeZone = this.event.end.timeZone = this.getTimeZone.value;
 
-      this.event.start.dateTime = this.buildDate(this.startDate, this.startTime);
-      this.event.end.dateTime = this.buildDate(this.endDate, this.endTime);
+      this.event.start.dateTime = this.buildDate(this.startDay, this.startTime);
+      this.event.end.dateTime = this.buildDate(this.endDay, this.endTime);
       // let attendees = this.attendees.split(", ");
       // for (let i = 0; i < attendees.length; i++) {
       //   console.log(attendees[i]);
@@ -120,6 +120,8 @@ export default {
       // await this.getGraphClient.api('/me/events')
       //     .header('Prefer', `outlook.timezone="${this.getTimeZone.value}"`)
       //     .post(this.event);
+
+      //todo clear input fields after adding
     }
   }
 

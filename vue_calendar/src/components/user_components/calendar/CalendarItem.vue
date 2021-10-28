@@ -1,5 +1,10 @@
 <template>
   <tr>
+    <td>
+      <b-form-checkbox :id="`checkbox-${event.id}`" v-model="status" :name="`checkbox-${event.id}`"
+                       value="accepted" unchecked-value="not_accepted" @change="sendEventId">{{ status }}
+      </b-form-checkbox>
+    </td>
     <td>{{ event.subject }}</td>
     <td>{{ event.bodyPreview }}</td>
     <td>{{ event.attendees | trimAttendees }}</td>
@@ -14,7 +19,8 @@ export default {
   name: "CalendarItem",
   data() {
     return {
-      datePattern: 'DD.MM.YYYY HH:mm Z'
+      datePattern: 'DD.MM.YYYY HH:mm Z',
+      status: 'not_accepted'
     }
   },
   props: {
@@ -34,13 +40,37 @@ export default {
       }
       return '-';
     }
+  },
+  methods: {
+    sendEventId() {
+      if (this.status === 'accepted') {
+        console.log(this.status);
+        this.$emit('push-deleted-event-id', this.event.id);
+      }
+      if (this.status === 'not_accepted') {
+        console.log(this.status);
+        this.$emit('pop-deleted-event-id', this.event.id);
+      }
+    }
   }
 }
 </script>
 
 <style scoped lang="scss">
 td {
-  border  : $border;
-  padding : $indent;
+  border    : $border;
+  padding   : $indent;
+  cursor    : pointer;
+  min-width : 200px;
+
+  &:nth-child(1) {
+    background-color : antiquewhite;
+    //border           : none;
+    min-width        : 50px;
+  }
+
+  &:hover {
+    background-color : #deeef3;
+  }
 }
 </style>

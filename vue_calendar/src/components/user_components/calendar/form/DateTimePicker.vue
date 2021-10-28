@@ -1,8 +1,8 @@
 <template>
   <div class="inline-time-block">
     <b-form-group :label="label" :label-for="inputID">
-      <b-form-datepicker v-if="isDateShown" @change="changeListener" :id="inputID" v-model="inputField"/>
-      <b-form-timepicker v-else @change="changeListener" :id="inputID" v-model="inputField"/>
+      <b-form-datepicker v-if="isDateShown" @input="changeListener" :id="inputID" v-model="inputField"/>
+      <b-form-timepicker v-else @input="changeListener" :id="inputID" v-model="inputField"/>
     </b-form-group>
   </div>
 </template>
