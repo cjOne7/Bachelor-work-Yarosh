@@ -1,41 +1,8 @@
 <template>
   <div>
     <b-form @submit.prevent="createNewEvent">
-      <!--      <b-form-group label="Subject:" label-for="subject-input" valid-feedback="Correct!" :state="state"-->
-      <!--                    :invalid-feedback="invalidFeedback">-->
-      <!--        <b-form-input id="subject-input" v-model.trim="event.subject" placeholder="Enter subject" :state="state" required/>-->
-      <!--      </b-form-group>-->
-
-      <!--      <b-form-group label="Location:" label-for="location-input">-->
-      <!--        <b-form-input id="location-input" v-model.trim="event.location.displayName" placeholder="Enter location"/>-->
-      <!--      </b-form-group>-->
-
-      <!--      <div class="time-container">-->
-      <!--        <div class="inline-time-block">-->
-      <!--          <b-form-group label="Choose a start date:" label-for="datepicker-input-1">-->
-      <!--            <b-form-datepicker id="datepicker-input-1" v-model="startDate"/>-->
-      <!--          </b-form-group>-->
-      <!--        </div>-->
-      <!--        <div class="inline-time-block">-->
-      <!--          <b-form-group label="Choose a start time:" label-for="timepicker-input-1">-->
-      <!--            <b-form-timepicker id="timepicker-input-1" v-model="startTime"/>-->
-      <!--          </b-form-group>-->
-      <!--        </div>-->
-      <!--      </div>-->
-
-      <!--      <div class="time-container">-->
-      <!--        <div class="inline-time-block">-->
-      <!--          <b-form-group label="Choose an end date:" label-for="datepicker-input-2">-->
-      <!--            <b-form-datepicker id="datepicker-input-2" v-model="endDate"/>-->
-      <!--          </b-form-group>-->
-      <!--        </div>-->
-      <!--        <div class="inline-time-block">-->
-      <!--          <b-form-group label="Choose an end time:" label-for="timepicker-input-2">-->
-      <!--            <b-form-timepicker id="timepicker-input-2" v-model="endTime"/>-->
-      <!--          </b-form-group>-->
-      <!--        </div>-->
-      <!--      </div>-->
-      <InputForm :label="'Subject:'" :inputID="'subject'" :placeholder="'Enter subject'" @input-data="setSubjectValue"/>
+      <InputForm :label="'Subject:'" :inputID="'subject'" :placeholder="'Enter subject'" @input-data="setSubjectValue"
+                 :required-field="'required'"/>
       <InputForm :label="'Location:'" :inputID="'location'" :placeholder="'Enter location'"
                  @input-data="setLocationValue"/>
 
@@ -150,9 +117,9 @@ export default {
       // }
 
       console.log(this.event);
-      await this.getGraphClient.api('/me/events')
-          .header('Prefer', `outlook.timezone="${this.getTimeZone.value}"`)
-          .post(this.event);
+      // await this.getGraphClient.api('/me/events')
+      //     .header('Prefer', `outlook.timezone="${this.getTimeZone.value}"`)
+      //     .post(this.event);
     }
   }
 
@@ -163,9 +130,5 @@ export default {
 .time-container {
   display: flex;
   justify-content: space-between;
-}
-
-.inline-time-block {
-  min-width: 48%;
 }
 </style>

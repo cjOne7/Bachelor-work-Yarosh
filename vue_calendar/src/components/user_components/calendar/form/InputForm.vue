@@ -1,8 +1,8 @@
 <template>
-  <b-form-group :label="label" :label-for="inputID" valid-feedback="Correct!" :state="state"
+  <b-form-group :label="label" :label-for="inputID" valid-feedback="That's enough!" :state="state"
                 :invalid-feedback="invalidFeedback">
     <b-form-input @change="changeListener" :id="inputID" v-model.trim="inputField" :state="state"
-                  :placeholder="placeholder"/>
+                  :placeholder="placeholder" :required="requiredField"/>
   </b-form-group>
 </template>
 
@@ -27,18 +27,25 @@ export default {
     placeholder: {
       type: String,
       required: true
+    },
+    requiredField: {
+      type: String,
+      required: false
     }
   },
   computed: {
     state() {
-      this.$emit('input-data', this.inputField);
-      return this.inputField.length >= this.minLength;
+      if (this.requiredField) {
+        this.changeListener();
+        return this.inputField.length >= this.minLength;
+      }
+      return null;
     },
     invalidFeedback() {
       if (this.inputField.length > 0) {
-        return `Enter at least ${this.minLength} characters.`
+        return `Enter at least ${this.minLength} characters.`;
       }
-      return 'Please, enter something.'
+      return 'Please, enter something.';
     }
   },
   methods: {
@@ -48,7 +55,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>
