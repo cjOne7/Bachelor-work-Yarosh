@@ -35,19 +35,22 @@
       <!--          </b-form-group>-->
       <!--        </div>-->
       <!--      </div>-->
-
       <InputForm :label="'Subject:'" :inputID="'subject'" :placeholder="'Enter subject'" @input-data="setSubjectValue"/>
       <InputForm :label="'Location:'" :inputID="'location'" :placeholder="'Enter location'"
                  @input-data="setLocationValue"/>
 
       <div class="time-container">
-        <DatePicker :label="'Choose a start date:'" :inputID="'datepicker-input-1'" @input-data="setStartDayValue"/>
-        <TimePicker :label="'Choose a start time:'" :inputID="'timepicker-input-1'" @input-data="setStartTimeValue"/>
+        <DateTimePicker :label="'Choose a start date:'" :inputID="'start-day'" @input-data="setStartDayValue"
+                        :component-name="'DatePicker'"/>
+        <DateTimePicker :label="'Choose a start time:'" :inputID="'start-time'" @input-data="setStartTimeValue"
+                        :component-name="'TimePicker'"/>
       </div>
 
       <div class="time-container">
-        <DatePicker :label="'Choose an end date:'" :inputID="'datepicker-input-2'" @input-data="setEndDayValue"/>
-        <TimePicker :label="'Choose an end time:'" :inputID="'timepicker-input-2'" @input-data="setEndTimeValue"/>
+        <DateTimePicker :label="'Choose an end date:'" :inputID="'end-day'" :component-name="'DatePicker'"
+                        @input-data="setEndDayValue"/>
+        <DateTimePicker :label="'Choose an end time:'" :inputID="'end-time'" :component-name="'TimePicker'"
+                        @input-data="setEndTimeValue"/>
       </div>
 
       <b-form-group label="Enter content:" label-for="body-textarea">
@@ -65,13 +68,11 @@
 <script>
 import {mapGetters} from 'vuex';
 import InputForm from "@/components/user_components/calendar/form/InputForm";
-import DatePicker from "@/components/user_components/calendar/form/DatePicker";
-import TimePicker from "@/components/user_components/calendar/form/TimePicker";
+import DateTimePicker from "@/components/user_components/calendar/form/DateTimePicker";
 
 export default {
   name: "AddEventForm",
-  // eslint-disable-next-line vue/no-unused-components
-  components: {TimePicker, DatePicker, InputForm},
+  components: {DateTimePicker, InputForm},
   data() {
     return {
       startDate: '',
