@@ -2,7 +2,7 @@
   <b-form-group :label="label" :label-for="inputID" valid-feedback="Correct!" :state="state"
                 :invalid-feedback="invalidFeedback">
     <b-form-input @change="changeListener" :id="inputID" v-model.trim="inputField" :state="state"
-                  :placeholder="placeholder"></b-form-input>
+                  :placeholder="placeholder"/>
   </b-form-group>
 </template>
 

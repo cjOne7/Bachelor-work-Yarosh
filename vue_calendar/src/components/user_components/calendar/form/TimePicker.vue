@@ -7,6 +7,8 @@
 </template>
 
 <script>
+import getCurrentISODate from './script'
+
 export default {
   name: "TimePicker",
   data() {
@@ -25,9 +27,9 @@ export default {
     }
   },
   mounted() {
-    const date = new Date();
-    const isoDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
-    this.inputField = isoDateTime.split('T')[1].slice(0, -5);
+    // const date = new Date();
+    // const isoDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
+    this.inputField = getCurrentISODate().split('T')[1].slice(0, -5);
     this.$emit('input-data', this.inputField);
   },
   methods: {
