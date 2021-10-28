@@ -4,13 +4,16 @@
       <!--      <b-form-group label="Subject:" label-for="subject-input" valid-feedback="Correct!">-->
       <!--        <b-form-input id="subject-input" v-model.trim="event.subject" placeholder="Enter subject"></b-form-input>-->
       <!--      </b-form-group>-->
+
       <!--      <b-form-group label="Location:" label-for="location-input">-->
       <!--        <b-form-input id="location-input" v-model.trim="event.location.displayName"-->
       <!--                      placeholder="Enter location"></b-form-input>-->
       <!--      </b-form-group>-->
+
       <!--      <b-form-group label="Attendees:" label-for="attendees-input">-->
       <!--        <b-form-input id="attendees-input" v-model.trim="attendees" placeholder="Add attendees"></b-form-input>-->
       <!--      </b-form-group>-->
+
       <!--      <div class="time-container">-->
       <!--        <div class="inline-time-block">-->
       <!--          <b-form-group label="Choose a start date:" label-for="datepicker-input-1">-->
@@ -23,6 +26,7 @@
       <!--          </b-form-group>-->
       <!--        </div>-->
       <!--      </div>-->
+
       <!--      <div class="time-container">-->
       <!--        <div class="inline-time-block">-->
       <!--          <b-form-group label="Choose an end date:" label-for="datepicker-input-2">-->
@@ -36,19 +40,17 @@
       <!--        </div>-->
       <!--      </div>-->
 
-      <InputForm :label="'Subject:'" :inputID="'subject-input'" :placeholder="'Enter subject'"
-                 @transfer-input-field="setSubjectValue"/>
-      <InputForm :label="'Location:'" :inputID="'location-input'" :placeholder="'Enter location'"
-                 @transfer-input-field="setLocationValue"/>
+      <InputForm :label="'Subject:'" :inputID="'subject'" :placeholder="'Enter subject'" @input-data="setSubjectValue"/>
+      <InputForm :label="'Location:'" :inputID="'location'" :placeholder="'Enter location'" @input-data="setLocationValue"/>
 
       <div class="time-container">
-        <DatePicker :label="'Choose a start date:'" :inputID="'datepicker-input-1'" @transfer-input-field="setStartDayValue"/>
-        <TimePicker :label="'Choose a start time:'" :inputID="'timepicker-input-1'" @transfer-input-field="setStartTimeValue"/>
+        <DatePicker :label="'Choose a start date:'" :inputID="'datepicker-input-1'" @input-data="setStartDayValue"/>
+        <TimePicker :label="'Choose a start time:'" :inputID="'timepicker-input-1'" @input-data="setStartTimeValue"/>
       </div>
 
       <div class="time-container">
-        <DatePicker :label="'Choose an end date:'" :inputID="'datepicker-input-2'" @transfer-input-field="setEndDayValue"/>
-        <TimePicker :label="'Choose an end time:'" :inputID="'timepicker-input-2'" @transfer-input-field="setEndTimeValue"/>
+        <DatePicker :label="'Choose an end date:'" :inputID="'datepicker-input-2'" @input-data="setEndDayValue"/>
+        <TimePicker :label="'Choose an end time:'" :inputID="'timepicker-input-2'" @input-data="setEndTimeValue"/>
       </div>
 
       <b-form-group label="Enter content:" label-for="body-textarea">
@@ -74,10 +76,10 @@ export default {
   components: {TimePicker, DatePicker, InputForm},
   data() {
     return {
-      startDate: '2021-10-27',
-      startTime: '10:00:00',
-      endDate: '2021-10-27',
-      endTime: '12:00:00',
+      startDate: '',
+      startTime: '',
+      endDate: '',
+      endTime: '',
       // attendees: '',
       event: {
         subject: 'test1',

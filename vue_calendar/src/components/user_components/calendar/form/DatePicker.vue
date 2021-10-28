@@ -25,11 +25,14 @@ export default {
     }
   },
   mounted() {
-
+    const date = new Date();
+    const isoDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
+    this.inputField = isoDateTime.split('T')[0];
+    this.$emit('input-data', this.inputField);
   },
   methods: {
     changeListener() {
-      this.$emit('transfer-input-field', this.inputField);
+      this.$emit('input-data', this.inputField);
     }
   }
 }

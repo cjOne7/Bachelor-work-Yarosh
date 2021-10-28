@@ -11,7 +11,8 @@ export default {
   name: "InputForm",
   data() {
     return {
-      inputField: ''
+      inputField: '',
+      minLength: 5
     }
   },
   props: {
@@ -30,20 +31,19 @@ export default {
   },
   computed: {
     state() {
-      this.$emit('transfer-input-field', this.inputField);
-      return this.inputField.length >= 4;
+      this.$emit('input-data', this.inputField);
+      return this.inputField.length >= this.minLength;
     },
     invalidFeedback() {
       if (this.inputField.length > 0) {
-        return 'Enter at least 4 characters.'
+        return `Enter at least ${this.minLength} characters.`
       }
-      return 'Please enter something.'
+      return 'Please, enter something.'
     }
   },
   methods: {
     changeListener() {
-      // console.log(this.inputField);
-      this.$emit('transfer-input-field', this.inputField);
+      this.$emit('input-data', this.inputField);
     }
   }
 }
