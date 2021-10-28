@@ -8,15 +8,15 @@
 
       <div class="time-container">
         <DateTimePicker :label="'Choose a start date:'" :inputID="'start-day'" @input-data="setStartDayValue"
-                        :component-name="'DatePicker'"/>
+                        :component-name="'datepicker'"/>
         <DateTimePicker :label="'Choose a start time:'" :inputID="'start-time'" @input-data="setStartTimeValue"
-                        :component-name="'TimePicker'"/>
+                        :component-name="'timepicker'"/>
       </div>
 
       <div class="time-container">
-        <DateTimePicker :label="'Choose an end date:'" :inputID="'end-day'" :component-name="'DatePicker'"
+        <DateTimePicker :label="'Choose an end date:'" :inputID="'end-day'" :component-name="'datepicker'"
                         @input-data="setEndDayValue"/>
-        <DateTimePicker :label="'Choose an end time:'" :inputID="'end-time'" :component-name="'TimePicker'"
+        <DateTimePicker :label="'Choose an end time:'" :inputID="'end-time'" :component-name="'timepicker'"
                         @input-data="setEndTimeValue"/>
       </div>
 

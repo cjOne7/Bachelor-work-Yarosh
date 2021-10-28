@@ -17,7 +17,7 @@ export default {
   },
   computed: {
     isDateShown() {
-      return this.componentName === 'DatePicker';
+      return this.componentName === 'datepicker';
     }
   },
   props: {
