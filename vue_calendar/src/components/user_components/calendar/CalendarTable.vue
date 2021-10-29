@@ -46,15 +46,12 @@ export default {
     saveDeletedId(eventId) {
       if (!this.eventIds.includes(eventId)) {
         this.eventIds.push(eventId);
-        console.log(this.eventIds)
       }
     },
     popDeletedId(eventId) {
       this.eventIds = this.eventIds.filter(id => id !== eventId);
-      console.log(this.eventIds);
     },
     async deleteChosenEvents() {
-      // eslint-disable-next-line no-empty
       for (let i = 0; i < this.eventIds.length; i++) {
         await this.getGraphClient.api(`/me/events/${this.eventIds[i]}`).delete();
         this.events = this.events.filter(event => event.id !== this.eventIds[i]);
