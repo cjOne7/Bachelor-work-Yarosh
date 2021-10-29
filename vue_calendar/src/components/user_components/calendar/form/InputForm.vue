@@ -50,7 +50,9 @@ export default {
   },
   methods: {
     changeListener() {
-      this.$emit('input-data', this.inputField);
+      if (this.inputField.length >= this.minLength) {
+        this.$emit('input-data', this.inputField);
+      }
     },
     setValue(value) {
       this.inputField = value;

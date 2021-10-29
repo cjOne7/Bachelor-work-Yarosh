@@ -36,7 +36,7 @@ export default {
   },
   mounted() {
     const date = new Date();
-    const isoDateTime =  new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
+    const isoDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
     const dateTime = isoDateTime.split('T');
     this.inputField = this.isDateShown ? dateTime[0] : dateTime[1].slice(0, -5);
     this.changeListener();

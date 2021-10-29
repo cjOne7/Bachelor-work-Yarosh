@@ -16,7 +16,8 @@
                       @pop-deleted-event-id="popDeletedId"/>
       </table>
       <transition name="fade">
-        <b-button v-if="eventIds.length" variant="danger" @click="deleteChosenEvents">Delete selected elements
+        <b-button v-if="eventIds.length" variant="danger" @click="deleteChosenEvents">
+          Delete selected elements
         </b-button>
       </transition>
     </div>
@@ -35,7 +36,7 @@ export default {
   data() {
     return {
       events: [],
-      fields: ['subject', 'bodyPreview', 'attendees', 'organizer', 'start', 'end'],
+      fields: ['subject', 'bodyPreview', 'attendees', 'organizer', 'start', 'end'],//todo add location
       loading: true,
       eventIds: []
     }

@@ -20,6 +20,10 @@
                         @input-data="setEndTimeValue"/>
       </div>
 
+      <transition name="fade">
+        <p v-if="errorState" class="error-container">Start date can't be earlier than end date!</p>
+      </transition>
+
       <b-form-group label="Enter content:" label-for="body-textarea">
         <b-form-textarea id="body-textarea" v-model.trim="event.body.content" placeholder="Enter content" rows="4"
                          max-rows="8"></b-form-textarea>
@@ -71,7 +75,14 @@ export default {
       }
     }
   },
-  computed: {...mapGetters(["getTimeZone", "getGraphClient"])},
+  computed: {
+    ...mapGetters(["getTimeZone", "getGraphClient"]),
+    errorState() {
+      const startDate = new Date(this.buildDate(this.startDay, this.startTime));
+      const endDate = new Date(this.buildDate(this.endDay, this.endTime));
+      return endDate < startDate;
+    }
+  },
   methods: {
     setSubjectValue(newValue) {
       this.event.subject = newValue;
@@ -97,23 +108,26 @@ export default {
     async createNewEvent() {
       this.event.start.timeZone = this.event.end.timeZone = this.getTimeZone.value;
 
-      this.event.start.dateTime = this.buildDate(this.startDay, this.startTime);
-      this.event.end.dateTime = this.buildDate(this.endDay, this.endTime);
-      //todo check start and end dates
-
       //todo add modal window with attendees
       // let attendees = this.attendees.split(", ");
       // for (let i = 0; i < attendees.length; i++) {
       //   console.log(attendees[i]);
       // }
 
-      // console.log(this.event);
-      await this.getGraphClient.api('/me/events')
-          .header('Prefer', `outlook.timezone="${this.getTimeZone.value}"`)
-          .post(this.event).then(() => this.created = true);
+      this.event.start.dateTime = this.buildDate(this.startDay, this.startTime);
+      this.event.end.dateTime = this.buildDate(this.endDay, this.endTime);
+      const startDate = new Date(this.event.start.dateTime);
+      const endDate = new Date(this.event.end.dateTime);
 
-      this.$emit('update', '');
-      this.event.body.content = '';
+      if (endDate >= startDate) {
+        // console.log(this.event);
+        await this.getGraphClient.api('/me/events')
+            .header('Prefer', `outlook.timezone="${this.getTimeZone.value}"`)
+            .post(this.event).then(() => this.created = true);
+
+        this.$emit('update', '');
+        this.event.body.content = '';
+      }
     }
   }
 }
@@ -123,5 +137,10 @@ export default {
 .time-container {
   display: flex;
   justify-content: space-between;
+}
+
+.error-container {
+  font-size: 0.75em;
+  color: red;
 }
 </style>
