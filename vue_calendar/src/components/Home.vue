@@ -14,15 +14,13 @@ import Jumbotron from "@/components/Jumbotron";
 export default {
   name: 'Home',
   components: {Jumbotron},
-  computed: {
-    ...mapGetters(['getAuthenticationState'])
-  }
+  computed: {...mapGetters(['getAuthenticationState'])}
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 .cont {
-  margin : auto;
-  width  : 80%;
+  margin: auto;
+  width: 80%;
 }
 </style>

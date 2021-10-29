@@ -39,8 +39,6 @@ import Logout from "@/components/Logout";
 export default {
   name: "Navbar",
   components: {Logout, Login},
-  computed: {
-    ...mapGetters(["getAuthenticationState", "getAuthResult"])
-  }
+  computed: {...mapGetters(["getAuthenticationState", "getAuthResult"])}
 }
 </script>

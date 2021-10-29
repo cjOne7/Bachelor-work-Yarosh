@@ -3,7 +3,6 @@
     <Loader v-if="loading"/>
     <div v-else-if="events.length">
       <table>
-        <thead>
         <tr>
           <th scope="col"></th>
           <th scope="col">Subject</th>
@@ -13,22 +12,20 @@
           <th scope="col">Start</th>
           <th scope="col">End</th>
         </tr>
-        </thead>
-        <tbody>
         <CalendarItem v-for="event in events" :key="event.id" :event="event" @push-deleted-event-id="saveDeletedId"
                       @pop-deleted-event-id="popDeletedId"/>
-        </tbody>
       </table>
-      <div>
-        <b-button v-if="eventIds.length" variant="danger" @click="deleteChosenEvents">Delete selected elements</b-button>
-      </div>
+      <transition name="fade">
+        <b-button v-if="eventIds.length" variant="danger" @click="deleteChosenEvents">Delete selected elements
+        </b-button>
+      </transition>
     </div>
-    <div v-else>No events</div>
+    <div v-else>No events!</div>
   </div>
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import CalendarItem from "@/components/user_components/calendar/CalendarItem";
 import Loader from "@/components/Loader";
 
@@ -43,6 +40,7 @@ export default {
       eventIds: []
     }
   },
+  computed: {...mapGetters(["getGraphClient"])},
   methods: {
     ...mapActions(["callMsGraphApi"]),
     saveDeletedId(eventId) {
@@ -55,24 +53,29 @@ export default {
       this.eventIds = this.eventIds.filter(id => id !== eventId);
       console.log(this.eventIds);
     },
-    deleteChosenEvents() {
+    async deleteChosenEvents() {
       // eslint-disable-next-line no-empty
       for (let i = 0; i < this.eventIds.length; i++) {
-
+        await this.getGraphClient.api(`/me/events/${this.eventIds[i]}`).delete();
+        this.events = this.events.filter(event => event.id !== this.eventIds[i]);
       }
       this.eventIds = [];
+    },
+    getEvents() {
+      const queryOptions = {
+        path: '/me/events',
+        selectedParams: this.fields.join(),
+        orderByParams: 'createdDateTime DESC'
+      };
+      this.callMsGraphApi(queryOptions).then(resp => {
+        this.events = resp.value;
+        this.loading = false;
+      }).catch(err => console.log(err));
     }
   },
   async mounted() {
-    const queryOptions = {
-      path: '/me/events',
-      selectedParams: this.fields.join(),
-      orderByParams: 'createdDateTime DESC'
-    };
-    this.callMsGraphApi(queryOptions).then(resp => {
-      this.events = resp.value;
-      this.loading = false;
-    }).catch(err => console.log(err));
+    this.getEvents();
+    this.$parent.$on('updateEventsTable', this.getEvents);
   }
 }
 </script>

@@ -9,7 +9,6 @@
       </transition>
 
       <transition name="fade" mode="out-in" appear>
-        <!--todo update list of events when event has been added-->
         <keep-alive>
           <component :is="currentOption" @show-calendar-events="showCalendarEvents"/>
         </keep-alive>
@@ -39,7 +38,10 @@ export default {
     showAddingNewEventForm() {
       this.currentOption = AddEventForm.name;
     },
-    showCalendarEvents() {
+    showCalendarEvents(created) {
+      if (created) {
+        this.$emit('updateEventsTable');
+      }
       this.currentOption = CalendarTable.name;
     }
   }

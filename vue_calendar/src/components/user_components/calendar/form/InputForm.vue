@@ -51,7 +51,13 @@ export default {
   methods: {
     changeListener() {
       this.$emit('input-data', this.inputField);
+    },
+    setValue(value) {
+      this.inputField = value;
     }
+  },
+  created() {
+    this.$parent.$on('update', this.setValue);
   }
 }
 </script>

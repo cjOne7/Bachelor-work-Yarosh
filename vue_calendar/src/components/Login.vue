@@ -12,7 +12,6 @@ export default {
     async login() {
       this.signIn()
           .then(() => this.receiveUserInfo());
-      // console.log(this.getUser);
     }
   }
 }

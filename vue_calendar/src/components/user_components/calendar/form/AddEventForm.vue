@@ -26,7 +26,8 @@
       </b-form-group>
 
       <b-button variant="primary" type="submit" class="my-1 mr-2">Confirm</b-button>
-      <b-button variant="danger" type="reset" class="my-1" @click="$emit('show-calendar-events')">Cancel</b-button>
+      <b-button variant="danger" type="reset" class="my-1" @click="$emit('show-calendar-events', created)">Cancel
+      </b-button>
     </b-form>
     <div>{{ event }}</div>
   </div>
@@ -46,12 +47,13 @@ export default {
       startTime: '',
       endDay: '',
       endTime: '',
+      created: false,
       // attendees: '',
       event: {
-        subject: 'test1',
+        subject: '',
         body: {
           contentType: 'HTML',
-          content: 'some content'
+          content: ''
         },
         start: {
           dateTime: '',
@@ -62,28 +64,14 @@ export default {
           timeZone: ''
         },
         location: {
-          displayName: 'Bar xxx'
+          displayName: ''
         },
         attendees: [],
         allowNewTimeProposals: true
-      },
-      minLength: 5
-    }
-  },
-  mounted() {
-  },
-  computed: {
-    ...mapGetters(["getTimeZone", "getGraphClient"]),
-    state() {
-      return this.event.subject.length >= this.minLength;
-    },
-    invalidFeedback() {
-      if (this.event.subject.length > 0) {
-        return `Enter at least ${this.minLength} characters.`
       }
-      return 'Please, enter something.'
     }
   },
+  computed: {...mapGetters(["getTimeZone", "getGraphClient"])},
   methods: {
     setSubjectValue(newValue) {
       this.event.subject = newValue;
@@ -111,20 +99,23 @@ export default {
 
       this.event.start.dateTime = this.buildDate(this.startDay, this.startTime);
       this.event.end.dateTime = this.buildDate(this.endDay, this.endTime);
+      //todo check start and end dates
+
+      //todo add modal window with attendees
       // let attendees = this.attendees.split(", ");
       // for (let i = 0; i < attendees.length; i++) {
       //   console.log(attendees[i]);
       // }
 
-      console.log(this.event);
-      // await this.getGraphClient.api('/me/events')
-      //     .header('Prefer', `outlook.timezone="${this.getTimeZone.value}"`)
-      //     .post(this.event);
+      // console.log(this.event);
+      await this.getGraphClient.api('/me/events')
+          .header('Prefer', `outlook.timezone="${this.getTimeZone.value}"`)
+          .post(this.event).then(() => this.created = true);
 
-      //todo clear input fields after adding
+      this.$emit('update', '');
+      this.event.body.content = '';
     }
   }
-
 }
 </script>
 

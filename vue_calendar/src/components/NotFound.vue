@@ -9,9 +9,7 @@
 export default {
   name: "NotFound",
   data() {
-    return {
-      timeToLeave: 3 //start time in seconds
-    }
+    return {timeToLeave: 3} //start time in seconds
   },
   mounted() {
     const interval = setInterval(() => {

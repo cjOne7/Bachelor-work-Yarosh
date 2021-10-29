@@ -1,8 +1,8 @@
 <template>
-  <tr>
+  <tr @click="showDetails">
     <td>
       <b-form-checkbox :id="`checkbox-${event.id}`" v-model="status" :name="`checkbox-${event.id}`"
-                       value="accepted" unchecked-value="not_accepted" @change="sendEventId">{{ status }}
+                       value="accepted" unchecked-value="not_accepted" @change="processEventId">{{ status }}
       </b-form-checkbox>
     </td>
     <td>{{ event.subject }}</td>
@@ -42,7 +42,7 @@ export default {
     }
   },
   methods: {
-    sendEventId() {
+    processEventId() {
       if (this.status === 'accepted') {
         console.log(this.status);
         this.$emit('push-deleted-event-id', this.event.id);
@@ -51,6 +51,9 @@ export default {
         console.log(this.status);
         this.$emit('pop-deleted-event-id', this.event.id);
       }
+    },
+    showDetails() {
+      //todo show details
     }
   }
 }
