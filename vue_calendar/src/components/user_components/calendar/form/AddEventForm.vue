@@ -93,8 +93,6 @@ export default {
       return condition;
     }
   },
-  mounted() {
-  },
   methods: {
     setSubjectValue(newValue) {
       this.event.subject = newValue;

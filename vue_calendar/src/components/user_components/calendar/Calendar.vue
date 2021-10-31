@@ -25,9 +25,7 @@ export default {
   name: "Calendar",
   components: {CalendarTable, AddEventForm},
   data() {
-    return {
-      currentOption: CalendarTable.name,
-    }
+    return {currentOption: CalendarTable.name}
   },
   computed: {
     isHidden() {

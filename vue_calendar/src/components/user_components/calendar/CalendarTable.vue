@@ -6,14 +6,16 @@
         <tr>
           <th scope="col"></th>
           <th scope="col">Subject</th>
+          <th scope="col">Body</th>
           <th scope="col">Organizer</th>
+          <th scope="col">Location</th>
           <th scope="col">Duration</th>
         </tr>
         <CalendarItem v-for="event in events" :key="event.id" :event="event" @push-deleted-event-id="saveDeletedId"
                       @pop-deleted-event-id="popDeletedId"/>
       </table>
       <transition name="fade">
-        <b-button v-if="eventIds.length" variant="danger" @click="deleteChosenEvents">
+        <b-button v-if="eventIds.length" variant="danger" @click="deleteChosenEvents" class="my-2">
           Delete selected elements
         </b-button>
       </transition>
@@ -33,7 +35,7 @@ export default {
   data() {
     return {
       events: [],
-      fields: ['subject', 'bodyPreview', 'attendees', 'organizer', 'start', 'end'],//todo add location
+      fields: ['subject', 'bodyPreview', 'attendees', 'organizer', 'location', 'start', 'end'],
       loading: true,
       eventIds: []
     }
@@ -49,9 +51,9 @@ export default {
     popDeletedId(eventId) {
       this.eventIds = this.eventIds.filter(id => id !== eventId);
     },
-    async deleteChosenEvents() {
+    deleteChosenEvents() {
       for (let i = 0; i < this.eventIds.length; i++) {
-        await this.getGraphClient.api(`/me/events/${this.eventIds[i]}`).delete();
+        this.getGraphClient.api(`/me/events/${this.eventIds[i]}`).delete();
         this.events = this.events.filter(event => event.id !== this.eventIds[i]);
       }
       this.eventIds = [];
@@ -83,16 +85,16 @@ table {
   tr {
     vertical-align : top;
 
-    //&:nth-child(odd) {
-    //}
-    //
-    //&:nth-child(even) {
-    //  //background-color : antiquewhite;
-    //}
+    &:nth-child(even) {
+      background-color : antiquewhite;
+    }
+
+    &:hover:nth-child(n+2) {
+      background-color : #deeef3;
+    }
   }
 
   th {
-    //background-color : antiquewhite;
     border  : $border;
     padding : $indent;
   }
