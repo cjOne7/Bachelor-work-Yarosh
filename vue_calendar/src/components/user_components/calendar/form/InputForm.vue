@@ -42,6 +42,8 @@ export default {
       return null;
     },
     invalidFeedback() {
+      const state = this.inputField.length >= this.minLength;
+      this.$emit('input-data-state', state);
       if (this.inputField.length > 0) {
         return `Enter at least ${this.minLength} characters.`;
       }

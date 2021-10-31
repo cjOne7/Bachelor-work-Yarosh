@@ -2,7 +2,7 @@
   <div>
     <b-form @submit.prevent="createNewEvent">
       <InputForm :label="'Subject:'" :inputID="'subject'" :placeholder="'Enter subject'" @input-data="setSubjectValue"
-                 :required-field="'required'"/>
+                 :required-field="'required'" @input-data-state="getInputDataState"/>
       <InputForm :label="'Location:'" :inputID="'location'" :placeholder="'Enter location'"
                  @input-data="setLocationValue"/>
 
@@ -29,7 +29,9 @@
                          max-rows="8"></b-form-textarea>
       </b-form-group>
 
-      <b-button variant="primary" type="submit" class="my-1 mr-2">Confirm</b-button>
+      <b-button id="confirm-add-event-btn" :class="{'forbidden-enter': errorState, 'forbidden-leave': !errorState}"
+                variant="primary" type="submit" class="my-1 mr-2">Confirm
+      </b-button>
       <b-button variant="danger" type="reset" class="my-1" @click="$emit('show-calendar-events', created)">Cancel
       </b-button>
     </b-form>
@@ -72,7 +74,8 @@ export default {
         },
         attendees: [],
         allowNewTimeProposals: true
-      }
+      },
+      subjectState: false
     }
   },
   computed: {
@@ -80,8 +83,17 @@ export default {
     errorState() {
       const startDate = new Date(this.buildDate(this.startDay, this.startTime));
       const endDate = new Date(this.buildDate(this.endDay, this.endTime));
-      return endDate < startDate;
+      const condition = endDate < startDate;
+      const confirmBtn = document.getElementById('confirm-add-event-btn');
+
+      if (confirmBtn !== null) {
+        confirmBtn.disabled = condition;
+        confirmBtn.style.cursor = condition ? 'not-allowed' : 'pointer';
+      }
+      return condition;
     }
+  },
+  mounted() {
   },
   methods: {
     setSubjectValue(newValue) {
@@ -105,6 +117,9 @@ export default {
     buildDate(day, time) {
       return `${day}T${time}`;
     },
+    getInputDataState(state) {
+      this.subjectState = state;
+    },
     async createNewEvent() {
       this.event.start.timeZone = this.event.end.timeZone = this.getTimeZone.value;
 
@@ -116,15 +131,14 @@ export default {
 
       this.event.start.dateTime = this.buildDate(this.startDay, this.startTime);
       this.event.end.dateTime = this.buildDate(this.endDay, this.endTime);
-      const startDate = new Date(this.event.start.dateTime);
-      const endDate = new Date(this.event.end.dateTime);
 
-      if (endDate >= startDate) {
-        // console.log(this.event);
+      if (this.subjectState) {
+        console.log(this.event);
         await this.getGraphClient.api('/me/events')
             .header('Prefer', `outlook.timezone="${this.getTimeZone.value}"`)
             .post(this.event).then(() => this.created = true);
 
+        //clear inputs in form
         this.$emit('update', '');
         this.event.body.content = '';
       }
@@ -133,14 +147,31 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .time-container {
-  display: flex;
-  justify-content: space-between;
+  display         : flex;
+  justify-content : space-between;
 }
 
 .error-container {
-  font-size: 0.75em;
-  color: red;
+  font-size : 0.75em;
+  color     : red;
 }
+
+$time-fading : 1s;
+
+@mixin disabledAnimation($cursor, $opacity, $transition) {
+  cursor     : $cursor;
+  opacity    : $opacity;
+  transition : $transition;
+}
+
+.forbidden-enter {
+  @include disabledAnimation(not-allowed, 0.3, $time-fading);
+}
+
+.forbidden-leave {
+  @include disabledAnimation(pointer, 1, $time-fading);
+}
+
 </style>

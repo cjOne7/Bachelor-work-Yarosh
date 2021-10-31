@@ -6,11 +6,8 @@
         <tr>
           <th scope="col"></th>
           <th scope="col">Subject</th>
-          <th scope="col">Body</th>
-          <th scope="col">Attendees</th>
           <th scope="col">Organizer</th>
-          <th scope="col">Start</th>
-          <th scope="col">End</th>
+          <th scope="col">Duration</th>
         </tr>
         <CalendarItem v-for="event in events" :key="event.id" :event="event" @push-deleted-event-id="saveDeletedId"
                       @pop-deleted-event-id="popDeletedId"/>

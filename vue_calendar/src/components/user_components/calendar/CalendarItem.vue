@@ -1,16 +1,12 @@
 <template>
   <tr @click="showDetails">
     <td>
-      <b-form-checkbox :id="`checkbox-${event.id}`" v-model="status" :name="`checkbox-${event.id}`"
-                       value="accepted" unchecked-value="not_accepted" @change="processEventId">{{ status }}
-      </b-form-checkbox>
+      <b-form-checkbox class="checkbox" :id="`checkbox-${event.id}`" v-model="status" :name="`checkbox-${event.id}`"
+                       value="accepted" unchecked-value="not_accepted" @change="processEventId"/>
     </td>
-    <td>{{ event.subject }}</td>
-    <td>{{ event.bodyPreview }}</td>
-    <td>{{ event.attendees | trimAttendees }}</td>
+    <td :title="event.subject">{{ event.subject | trimSubject }}</td>
     <td>{{ event.organizer.emailAddress.name }}</td>
-    <td>{{ event.start.dateTime | moment(datePattern) }}</td>
-    <td>{{ event.end.dateTime | moment(datePattern) }}</td>
+    <td>{{ event.start.dateTime | moment(datePattern) }}-{{ event.end.dateTime | moment(datePattern) }}</td>
   </tr>
 </template>
 
@@ -19,7 +15,7 @@ export default {
   name: "CalendarItem",
   data() {
     return {
-      datePattern: 'DD.MM.YYYY HH:mm Z',
+      datePattern: 'DD.MM.YYYY HH:mm',
       status: 'not_accepted'
     }
   },
@@ -39,16 +35,17 @@ export default {
         return attendees.join(", ");
       }
       return '-';
+    },
+    trimSubject(value) {
+      return value.length >= 20 ? value.slice(0, 20).trim() + "..." : value;
     }
   },
   methods: {
     processEventId() {
       if (this.status === 'accepted') {
-        console.log(this.status);
         this.$emit('push-deleted-event-id', this.event.id);
       }
       if (this.status === 'not_accepted') {
-        console.log(this.status);
         this.$emit('pop-deleted-event-id', this.event.id);
       }
     },
@@ -68,12 +65,19 @@ td {
 
   &:nth-child(1) {
     background-color : antiquewhite;
-    //border           : none;
-    min-width        : 50px;
+    text-align       : center;
+    min-width        : 1.5em;
   }
 
   &:hover {
     background-color : #deeef3;
   }
+}
+
+.checkbox {
+  //margin : auto;
+  //width  : 100%;
+  //text-align: center;
+  margin-left : $indent;
 }
 </style>
