@@ -9,7 +9,7 @@
           <th scope="col">Body</th>
           <th scope="col">Organizer</th>
           <th scope="col">Location</th>
-          <th scope="col">Duration</th>
+          <th scope="col">Start</th>
         </tr>
         <CalendarItem v-for="event in events" :key="event.id" :event="event" @push-deleted-event-id="saveDeletedId"
                       @pop-deleted-event-id="popDeletedId"/>
