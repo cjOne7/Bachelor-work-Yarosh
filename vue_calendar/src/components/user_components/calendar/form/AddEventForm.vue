@@ -29,13 +29,20 @@
                          max-rows="8"></b-form-textarea>
       </b-form-group>
 
+
+      <div class="modal-alert" :class="{'modal-active': successAlert, 'modal-not-active': !successAlert}">
+        <div class="modal-cont">
+          <span class="close" @click="successAlert = false">&times;</span>
+          <p><i class="fa fa-check"></i> Event successfully created!</p>
+        </div>
+      </div>
+
       <b-button id="confirm-add-event-btn" :class="{'forbidden-enter': errorState, 'forbidden-leave': !errorState}"
-                variant="primary" type="submit" class="my-1 mr-2">Confirm
+                variant="primary" type="submit" class="my-1 mr-2">Create
       </b-button>
-      <b-button variant="danger" type="reset" class="my-1" @click="$emit('show-calendar-events', created)">Cancel
+      <b-button variant="danger" type="reset" class="my-1" @click="$emit('show-calendar-events', created)">Back
       </b-button>
     </b-form>
-    <div>{{ event }}</div>
   </div>
 </template>
 
@@ -75,7 +82,8 @@ export default {
         attendees: [],
         allowNewTimeProposals: true
       },
-      subjectState: false
+      subjectState: false,
+      successAlert: false
     }
   },
   computed: {
@@ -131,10 +139,17 @@ export default {
       this.event.end.dateTime = this.buildDate(this.endDay, this.endTime);
 
       if (this.subjectState) {
-        console.log(this.event);
         await this.getGraphClient.api('/me/events')
             .header('Prefer', `outlook.timezone="${this.getTimeZone.value}"`)
-            .post(this.event).then(() => this.created = true);
+            .post(this.event)
+            .then(() => {
+              this.created = true;
+              this.successAlert = true;
+              setTimeout(() => {
+                this.successAlert = false;
+              }, 3000);
+            })
+            .catch(err => console.log(err));//add error alert
 
         //clear inputs in form
         this.$emit('update', '');
@@ -158,12 +173,6 @@ export default {
 
 $time-fading : 1s;
 
-@mixin disabledAnimation($cursor, $opacity, $transition) {
-  cursor     : $cursor;
-  opacity    : $opacity;
-  transition : $transition;
-}
-
 .forbidden-enter {
   @include disabledAnimation(not-allowed, 0.3, $time-fading);
 }
@@ -172,4 +181,51 @@ $time-fading : 1s;
   @include disabledAnimation(pointer, 1, $time-fading);
 }
 
+.modal-active {
+  @include showAlertMessage(1, translateY(80%), 2s);
+}
+
+.modal-not-active {
+  @include showAlertMessage(0, translateY(-80%), 2s);
+}
+
+$left        : 25%;
+$width       : 100% - $left * 2;
+
+.modal-alert {
+  display  : block;
+  position : fixed;
+  z-index  : 1;
+  left     : $left;
+  top      : 5%;
+  width    : $width;
+  overflow : auto;
+}
+
+.modal-cont {
+  color            : #270;
+  background-color : #DFF2BF;
+  @include px($indent * 2);
+  @include py($indent * 2);
+  width            : 100%;
+  border-radius    : 0.4em;
+}
+
+p {
+  margin : 0;
+}
+
+.close {
+  color       : #aaa;
+  float       : right;
+  font-size   : 28px;
+  font-weight : bold;
+  line-height : 0.75;
+
+  &:hover, &:focus {
+    color           : black;
+    text-decoration : none;
+    cursor          : pointer;
+  }
+}
 </style>

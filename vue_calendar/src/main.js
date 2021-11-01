@@ -4,6 +4,9 @@ import routes from "@/router/routes";
 import {BootstrapVue} from 'bootstrap-vue';
 import store from '@/store/index';
 
+import "@fortawesome/fontawesome-free/css/all.css";
+import "@fortawesome/fontawesome-free/js/all.js";
+
 // Import Bootstrap an BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';

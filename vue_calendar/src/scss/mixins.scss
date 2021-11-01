@@ -12,3 +12,20 @@
   padding-top    : $value;
   padding-bottom : $value;
 }
+
+@mixin px($value) {
+  padding-right    : $value;
+  padding-left : $value;
+}
+
+@mixin showAlertMessage($opacity, $transform, $transition-duration) {
+  opacity             : $opacity;
+  transform           : $transform;
+  transition-duration : $transition-duration;
+}
+
+@mixin disabledAnimation($cursor, $opacity, $transition) {
+  cursor     : $cursor;
+  opacity    : $opacity;
+  transition : $transition;
+}
