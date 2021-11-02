@@ -24,7 +24,8 @@ export default {
         async callMsGraphApi(context, {path, selectedParams, orderByParams}) {
             return await context.state.graphClient
                 .api(path)
-                .header('Prefer', `outlook.timezone="${context.state.timeZone.value}"`)
+                .header('Prefer',
+                    `outlook.timezone="${context.state.timeZone.value || Intl.DateTimeFormat().resolvedOptions().timeZone}"`)
                 .select(selectedParams)
                 .orderby(orderByParams)
                 .get();
