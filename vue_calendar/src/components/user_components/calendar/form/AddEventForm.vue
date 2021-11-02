@@ -29,13 +29,7 @@
                          max-rows="8"></b-form-textarea>
       </b-form-group>
 
-
-      <div class="modal-alert" :class="{'modal-active': successAlert, 'modal-not-active': !successAlert}">
-        <div class="modal-cont">
-          <span class="close" @click="successAlert = false">&times;</span>
-          <p><i class="fa fa-check"></i> Event successfully created!</p>
-        </div>
-      </div>
+      <AlertMessage/>
 
       <b-button id="confirm-add-event-btn" :class="{'forbidden-enter': errorState, 'forbidden-leave': !errorState}"
                 variant="primary" type="submit" class="my-1 mr-2">Create
@@ -50,10 +44,11 @@
 import {mapGetters} from 'vuex';
 import InputForm from "@/components/user_components/calendar/form/InputForm";
 import DateTimePicker from "@/components/user_components/calendar/form/DateTimePicker";
+import AlertMessage from "@/components/user_components/calendar/form/AlertMessage";
 
 export default {
   name: "AddEventForm",
-  components: {DateTimePicker, InputForm},
+  components: {AlertMessage, DateTimePicker, InputForm},
   data() {
     return {
       startDay: '',
@@ -82,8 +77,7 @@ export default {
         attendees: [],
         allowNewTimeProposals: true
       },
-      subjectState: false,
-      successAlert: false
+      subjectState: false
     }
   },
   computed: {
@@ -144,12 +138,12 @@ export default {
             .post(this.event)
             .then(() => {
               this.created = true;
-              this.successAlert = true;
+              this.$emit('show-alert', true);
               setTimeout(() => {
-                this.successAlert = false;
+                this.$emit('show-alert', false);
               }, 3000);
             })
-            .catch(err => console.log(err));//add error alert
+            .catch(err => console.log(err));//todo add error alert
 
         //clear inputs in form
         this.$emit('update', '');
@@ -179,53 +173,5 @@ $time-fading : 1s;
 
 .forbidden-leave {
   @include disabledAnimation(pointer, 1, $time-fading);
-}
-
-.modal-active {
-  @include showAlertMessage(1, translateY(80%), 2s);
-}
-
-.modal-not-active {
-  @include showAlertMessage(0, translateY(-80%), 2s);
-}
-
-$left        : 25%;
-$width       : 100% - $left * 2;
-
-.modal-alert {
-  display  : block;
-  position : fixed;
-  z-index  : 1;
-  left     : $left;
-  top      : 5%;
-  width    : $width;
-  overflow : auto;
-}
-
-.modal-cont {
-  color            : #270;
-  background-color : #DFF2BF;
-  @include px($indent * 2);
-  @include py($indent * 2);
-  width            : 100%;
-  border-radius    : 0.4em;
-}
-
-p {
-  margin : 0;
-}
-
-.close {
-  color       : #aaa;
-  float       : right;
-  font-size   : 28px;
-  font-weight : bold;
-  line-height : 0.75;
-
-  &:hover, &:focus {
-    color           : black;
-    text-decoration : none;
-    cursor          : pointer;
-  }
 }
 </style>
