@@ -1,10 +1,10 @@
 <template>
   <div>
     <EventsDetailField :field-name="'Subject:'" :field-data="event.subject"/>
-    <EventsDetailField :field-name="'Body:'" :field-data="event.bodyPreview"/>
+    <EventsDetailField :field-name="'Body:'" :field-data="event.bodyPreview | checkForEmpty"/>
     <EventsDetailField :field-name="'Organizer:'" :field-data="event.organizer.emailAddress.name"/>
     <EventsDetailField :field-name="'Attendees:'" :field-data="event.attendees | trimAttendees"/>
-    <EventsDetailField :field-name="'Location:'" :field-data="event.location.displayName"/>
+    <EventsDetailField :field-name="'Location:'" :field-data="event.location.displayName | checkForEmpty"/>
     <EventsDetailField :field-name="'Start:'" :field-data="event.start.dateTime | moment(datePattern)"/>
     <EventsDetailField :field-name="'End:'" :field-data="event.end.dateTime | moment(datePattern)"/>
   </div>
@@ -37,7 +37,8 @@ export default {
         return attendees.join(", ");
       }
       return '-';
-    }
+    },
+    checkForEmpty: value => value === '' ? '-' : value
   }
 }
 </script>

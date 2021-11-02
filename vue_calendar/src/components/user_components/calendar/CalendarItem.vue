@@ -6,13 +6,10 @@
     </td>
     <td v-b-modal="`event-${event.id}-details`" :title="event.subject">{{ event.subject | trimLongString }}</td>
     <td v-b-modal="`event-${event.id}-details`" :title="event.bodyPreview">
-      {{ event.bodyPreview === "" ? '-' : event.bodyPreview | trimLongString }}
+      {{ event.bodyPreview | trimLongString | checkForEmpty }}
     </td>
     <td v-b-modal="`event-${event.id}-details`">{{ event.organizer.emailAddress.name }}</td>
-    <td v-b-modal="`event-${event.id}-details`">{{
-        event.location.displayName === "" ? '-' : event.location.displayName
-      }}
-    </td>
+    <td v-b-modal="`event-${event.id}-details`">{{ event.location.displayName | checkForEmpty }}</td>
     <td v-b-modal="`event-${event.id}-details`">{{ event.start.dateTime | moment(datePattern) }}</td>
 
     <b-modal :id="`event-${event.id}-details`" hide-footer>
@@ -45,7 +42,8 @@ export default {
     trimLongString(value) {
       const minDisplayedLength = 20;
       return value.length >= minDisplayedLength ? value.slice(0, minDisplayedLength).trim() + "..." : value;
-    }
+    },
+    checkForEmpty: value => value === '' ? '-' : value
   },
   methods: {
     processEventId() {
