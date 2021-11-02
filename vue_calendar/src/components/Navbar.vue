@@ -13,7 +13,7 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown v-if="getAuthenticationState" text="User" right>
-            <b-dropdown-item>Profile</b-dropdown-item>
+            <b-dropdown-item :to="{name: 'Profile'}">Profile</b-dropdown-item>
             <b-dropdown-item>
               <Logout/>
             </b-dropdown-item>
