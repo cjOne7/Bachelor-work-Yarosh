@@ -10,7 +10,7 @@
     </td>
     <td v-b-modal="`event-${event.id}-details`">{{ event.organizer.emailAddress.name }}</td>
     <td v-b-modal="`event-${event.id}-details`">{{ event.location.displayName | checkForEmpty }}</td>
-    <td v-b-modal="`event-${event.id}-details`">{{ event.start.dateTime | moment(datePattern) }}</td>
+    <td v-b-modal="`event-${event.id}-details`">{{ event.start.dateTime | dateFormatter }}</td>
 
     <b-modal :id="`event-${event.id}-details`" hide-footer>
       <template #modal-title>Event info</template>
@@ -28,7 +28,6 @@ export default {
   components: {EventsDetail},
   data() {
     return {
-      datePattern: 'DD.MM.YYYY HH:mm',
       status: 'not_accepted'
     }
   },
@@ -42,8 +41,7 @@ export default {
     trimLongString(value) {
       const minDisplayedLength = 20;
       return value.length >= minDisplayedLength ? value.slice(0, minDisplayedLength).trim() + "..." : value;
-    },
-    checkForEmpty: value => value === '' ? '-' : value
+    }
   },
   methods: {
     processEventId() {

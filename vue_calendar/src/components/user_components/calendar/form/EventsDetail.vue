@@ -5,8 +5,8 @@
     <EventsDetailField :field-name="'Organizer:'" :field-data="event.organizer.emailAddress.name"/>
     <EventsDetailField :field-name="'Attendees:'" :field-data="event.attendees | trimAttendees"/>
     <EventsDetailField :field-name="'Location:'" :field-data="event.location.displayName | checkForEmpty"/>
-    <EventsDetailField :field-name="'Start:'" :field-data="event.start.dateTime | moment(datePattern)"/>
-    <EventsDetailField :field-name="'End:'" :field-data="event.end.dateTime | moment(datePattern)"/>
+    <EventsDetailField :field-name="'Start:'" :field-data="event.start.dateTime | dateFormatter"/>
+    <EventsDetailField :field-name="'End:'" :field-data="event.end.dateTime | dateFormatter"/>
   </div>
 </template>
 
@@ -16,11 +16,6 @@ import EventsDetailField from "@/components/user_components/calendar/form/Events
 export default {
   name: "EventsDetail",
   components: {EventsDetailField},
-  data() {
-    return {
-      datePattern: 'DD.MM.YYYY HH:mm'
-    }
-  },
   props: {
     event: {
       type: Object,
@@ -37,8 +32,7 @@ export default {
         return attendees.join(", ");
       }
       return '-';
-    },
-    checkForEmpty: value => value === '' ? '-' : value
+    }
   }
 }
 </script>
