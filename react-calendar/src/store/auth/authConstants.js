@@ -1,0 +1,4 @@
+export const SET_AUTH_RESULT = 'AUTH/SET_AUTH_RESULT';
+export const SET_MSAL_INSTANCE = 'AUTH/SET_MSAL_INSTANCE';
+export const SET_IS_AUTH = 'AUTH/SET_IS_AUTH';
+export const SIGN_OUT = 'AUTH/SIGN_OUT';

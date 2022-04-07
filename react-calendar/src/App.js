@@ -1,10 +1,13 @@
 import React from 'react';
+import RNavbar from "./components/navbar/RNavbar";
+import Jumbotron from "./components/jumbotron/Jumbotron";
 
 const App = () => {
     return (
-        <div>
-
-        </div>
+        <>
+            <RNavbar></RNavbar>
+            <Jumbotron></Jumbotron>
+        </>
     );
 };
 
