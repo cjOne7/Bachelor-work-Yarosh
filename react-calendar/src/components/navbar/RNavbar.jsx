@@ -7,7 +7,6 @@ import {signInAction, singOutAction} from "../../store/auth/authReducer";
 const RNavbar = () => {
     const dispatch = useDispatch();
     const isAuthenticated = useSelector(state => state.authReducer.isAuthenticated);
-    const authReducer = useSelector(state => state.authReducer);
 
     return (
         <>
@@ -23,7 +22,7 @@ const RNavbar = () => {
                             {isAuthenticated
                                 ? <NavDropdown title="User" id="collasible-nav-dropdown">
                                     <NavDropdown.Item>Profile</NavDropdown.Item>
-                                    <NavDropdown.Item onClick={() => dispatch(singOutAction(authReducer))}>
+                                    <NavDropdown.Item onClick={() => dispatch(singOutAction())}>
                                         Logout
                                     </NavDropdown.Item>
                                 </NavDropdown>

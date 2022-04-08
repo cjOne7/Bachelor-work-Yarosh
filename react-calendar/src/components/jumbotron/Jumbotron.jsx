@@ -12,7 +12,6 @@ const WelcomeMess = () => {
 const Jumbotron = () => {
     const dispatch = useDispatch();
     const isAuthenticated = useSelector(state => state.authReducer.isAuthenticated);
-    const authReducer = useSelector(state => state.authReducer);
 
     return (
         <div className={'cont'}>
@@ -27,7 +26,7 @@ const Jumbotron = () => {
                             ? <>
                                 <WelcomeMess/>
                                 <Button variant="primary"
-                                        onClick={() => dispatch(singOutAction(authReducer))}>Logout</Button>
+                                        onClick={() => dispatch(singOutAction())}>Logout</Button>
                             </>
                             : <Button variant="primary"
                                       onClick={() => dispatch(signInAction())}>Login</Button>

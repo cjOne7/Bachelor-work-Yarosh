@@ -61,9 +61,9 @@ export const signInAction = () => {
     }
 }
 
-export const singOutAction = ({msalInstance, authResult}) => {
+export const singOutAction = () => {
     return async (dispatch, getState) => {
-        // const {msalInstance, authResult} = getState().authReducer;
+        const {msalInstance, authResult} = getState().authReducer;
         try {
             const logoutRequest = {
                 account: msalInstance.getAccountByUsername(authResult.account.username),
