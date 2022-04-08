@@ -1,5 +1,5 @@
 import {PublicClientApplication} from "@azure/msal-browser";
-import {setGraphClientAction} from "../graph/graphReducer";
+import {receiveUserInfoAction, setGraphClientAction} from "../graph/graphReducer";
 import {SET_AUTH_RESULT, SET_IS_AUTH, SET_MSAL_INSTANCE, SIGN_OUT} from "./authConstants";
 
 const initialState = {
@@ -52,6 +52,8 @@ export const signInAction = () => {
                     dispatch(setAuthResultAction(loginResponse));
                     dispatch(setIsAuthAction());
                     dispatch(setGraphClientAction(loginResponse.accessToken));
+                }).then(() => {
+                    dispatch(receiveUserInfoAction());
                 });
         } catch (e) {
             console.log("Login error: " + e.message);
@@ -60,7 +62,8 @@ export const signInAction = () => {
 }
 
 export const singOutAction = ({msalInstance, authResult}) => {
-    return async dispatch => {
+    return async (dispatch, getState) => {
+        // const {msalInstance, authResult} = getState().authReducer;
         try {
             const logoutRequest = {
                 account: msalInstance.getAccountByUsername(authResult.account.username),

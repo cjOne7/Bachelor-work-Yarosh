@@ -1,17 +1,18 @@
 import React from 'react';
 import {Container, Button} from "react-bootstrap";
 import './jumbotron.css';
-import {connect, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {signInAction, singOutAction} from "../../store/auth/authReducer";
 
 const WelcomeMess = () => {
     const username = useSelector(state => state.authReducer.authResult.account.name);
-    return (
-        <p>Welcome, {username}!</p>
-    );
+    return <p>Welcome, {username}!</p>;
 }
 
 const Jumbotron = () => {
+    const dispatch = useDispatch();
     const isAuthenticated = useSelector(state => state.authReducer.isAuthenticated);
+    const authReducer = useSelector(state => state.authReducer);
 
     return (
         <div className={'cont'}>
@@ -21,8 +22,16 @@ const Jumbotron = () => {
                     <p className="lead">
                         This sample app shows how to use the Microsoft Graph API to access a user's data from React
                     </p>
-                    {isAuthenticated && <WelcomeMess/>}
-                    <Button variant="primary">Login</Button>
+                    {
+                        isAuthenticated
+                            ? <>
+                                <WelcomeMess/>
+                                <Button variant="primary"
+                                        onClick={() => dispatch(singOutAction(authReducer))}>Logout</Button>
+                            </>
+                            : <Button variant="primary"
+                                      onClick={() => dispatch(signInAction())}>Login</Button>
+                    }
                 </Container>
             </div>
         </div>

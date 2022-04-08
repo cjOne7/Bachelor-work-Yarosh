@@ -1,1 +1,3 @@
 export const SET_GRAPH_CLIENT = 'GRAPH/SET_GRAPH_CLIENT';
+export const SET_TIMEZONE = 'GRAPH/SET_TIMEZONE';
+export const SET_USER = 'GRAPH/SET_USER';
