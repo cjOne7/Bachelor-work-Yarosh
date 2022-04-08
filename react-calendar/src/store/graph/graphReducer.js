@@ -27,9 +27,17 @@ export const graphReducer = (state = initialState, action) => {
 export const receiveUserInfoAction = () => {
     return async (dispatch, getState) => {
         const {graphClient} = getState().graphReducer;
-        const {isAuthenticated} = getState().authReducer;
-        console.log(isAuthenticated);
-        // const user = await graphClient.api('/me').get();
+        const user = await graphClient.api('/me').get();
+        dispatch(setUserAction(user));
+        dispatch(receivePreferredTimezoneAction());
+    }
+}
+
+export const receivePreferredTimezoneAction = () => {
+    return async (dispatch, getState) => {
+        const {graphClient} = getState().graphReducer;
+        const timeZone = await graphClient.api('/me/mailboxSettings/timeZone').get();
+        dispatch(setTimezoneAction(timeZone));
     }
 }
 
