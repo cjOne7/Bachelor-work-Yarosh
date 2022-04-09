@@ -13,7 +13,7 @@ const CalendarItem = ({event}) => {
     return (
         <tr>
             <td>
-                <Form.Check type={'checkbox'}/>
+                <Form.Check type={'checkbox'} className={'checkbox'}/>
             </td>
             <td title={event.subject}>
                 {trimLongString(event.subject)}

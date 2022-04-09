@@ -36,6 +36,7 @@ class CalendarTable extends React.Component {
                 {this.state.loading
                     ? <Loader/>
                     : <table>
+                        <thead>
                         <tr>
                             <th scope={'col'}></th>
                             <th scope={'col'}>Subject</th>
@@ -44,7 +45,10 @@ class CalendarTable extends React.Component {
                             <th scope={'col'}>Location</th>
                             <th scope={'col'}>Start</th>
                         </tr>
+                        </thead>
+                        <tbody>
                         {this.state.events.map(event => <CalendarItem event={event} key={event.id}/>)}
+                        </tbody>
                     </table>
                 }
             </div>

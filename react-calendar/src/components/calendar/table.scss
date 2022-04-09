@@ -15,21 +15,26 @@ table {
 	&:hover:nth-child(n+2) {
 	  background-color : #deeef3;
 	}
-  }
 
-  th {
-	border  : $border;
-	padding : $indent;
+	th {
+	  border  : $border;
+	  padding : $indent;
+	}
+
+	td {
+	  border    : $border;
+	  padding   : $indent;
+	  cursor    : pointer;
+	  min-width : 200px;
+
+	  &:nth-child(1) {
+		min-width : 1.5em;
+	  }
+	}
   }
 }
 
-td {
-  border    : $border;
-  padding   : $indent;
-  cursor    : pointer;
-  min-width : 200px;
-
-  &:nth-child(1) {
-	min-width : 1.5em;
-  }
+.checkbox {
+  margin-right : 5px;
+  margin-left  : 5px;
 }
