@@ -1,0 +1,35 @@
+@import "../../scss/variables";
+
+table {
+  border          : $border;
+  border-collapse : collapse;
+  margin-top      : $indent * 2;
+
+  tr {
+	vertical-align : top;
+
+	&:nth-child(even) {
+	  background-color : antiquewhite;
+	}
+
+	&:hover:nth-child(n+2) {
+	  background-color : #deeef3;
+	}
+  }
+
+  th {
+	border  : $border;
+	padding : $indent;
+  }
+}
+
+td {
+  border    : $border;
+  padding   : $indent;
+  cursor    : pointer;
+  min-width : 200px;
+
+  &:nth-child(1) {
+	min-width : 1.5em;
+  }
+}

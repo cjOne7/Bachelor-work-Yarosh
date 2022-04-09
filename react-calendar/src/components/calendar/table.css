@@ -1,0 +1,30 @@
+table {
+  border: 1px solid black;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+table tr {
+  vertical-align: top;
+}
+table tr:nth-child(even) {
+  background-color: antiquewhite;
+}
+table tr:hover:nth-child(n+2) {
+  background-color: #deeef3;
+}
+table th {
+  border: 1px solid black;
+  padding: 5px;
+}
+
+td {
+  border: 1px solid black;
+  padding: 5px;
+  cursor: pointer;
+  min-width: 200px;
+}
+td:nth-child(1) {
+  min-width: 1.5em;
+}
+
+/*# sourceMappingURL=table.css.map */

@@ -1,10 +1,14 @@
 import React from 'react';
+import {Container} from 'react-bootstrap'
+import CalendarTable from "./CalendarTable";
 
 const Calendar = () => {
     return (
-        <div>
-            hello
-        </div>
+        <Container>
+            <h1>Calendar</h1>
+            <button className={'btn btn-primary'}>Add new event</button>
+            <CalendarTable/>
+        </Container>
     );
 };
 

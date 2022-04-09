@@ -73,7 +73,7 @@ export default {
   async mounted() {
     this.getEvents();
     //https://stackoverflow.com/questions/42632711/how-to-call-function-on-child-component-on-parent-events
-    //по простому $parent.$on ставит на прослушку event с названием updateEventsTable для родительского компонента
+    //$parent.$on ставит на прослушку event с названием updateEventsTable для родительского компонента
     this.$parent.$on('updateEventsTable', this.getEvents);
   }
 }

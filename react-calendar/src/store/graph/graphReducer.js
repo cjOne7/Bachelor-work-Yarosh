@@ -41,6 +41,19 @@ export const receivePreferredTimezoneAction = () => {
     }
 }
 
+export const callMsGraphApi = ({path, selectedParams, orderByParams}) => {
+    return async (dispatch, getState) => {
+        const {timeZone, graphClient} = getState().graphReducer;
+        return await graphClient
+            .api(path)
+            .header('Prefer',
+                `outlook.timezone="${timeZone.value || Intl.DateTimeFormat().resolvedOptions().timeZone}"`)
+            .select(selectedParams)
+            .orderby(orderByParams)
+            .get();
+    }
+}
+
 export const setGraphClientAction = accessToken => ({type: SET_GRAPH_CLIENT, payload: accessToken});
 export const setTimezoneAction = timezone => ({type: SET_TIMEZONE, payload: timezone});
 export const setUserAction = user => ({type: SET_USER, payload: user});

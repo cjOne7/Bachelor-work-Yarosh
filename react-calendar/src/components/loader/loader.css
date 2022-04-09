@@ -1,17 +1,44 @@
-/* Error: Can't find stylesheet to import.
- *   ,
- * 1 | @import "../../scss/variables";
- *   |         ^^^^^^^^^^^^^^^^^^^^^^
- *   '
- *   loader.scss 1:9  root stylesheet */
-
-body::before {
-  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
-      "Droid Sans Mono", monospace, monospace;
-  white-space: pre;
-  display: block;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-bottom: 2px solid black;
-  content: "Error: Can't find stylesheet to import.\a   \2577 \a 1 \2502  @import \"../../scss/variables\";\d\a   \2502          ^^^^^^^^^^^^^^^^^^^^^^\a   \2575 \a   loader.scss 1:9  root stylesheet";
+.ring-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25vh;
 }
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 275px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  margin: 10px;
+  border: 15px solid #cef;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #cef transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/*# sourceMappingURL=loader.css.map */
