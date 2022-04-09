@@ -123,12 +123,6 @@ export default {
     async createNewEvent() {
       this.event.start.timeZone = this.event.end.timeZone = this.getTimeZone.value;
 
-      //todo add modal window with attendees
-      // let attendees = this.attendees.split(", ");
-      // for (let i = 0; i < attendees.length; i++) {
-      //   console.log(attendees[i]);
-      // }
-
       this.event.start.dateTime = this.buildDate(this.startDay, this.startTime);
       this.event.end.dateTime = this.buildDate(this.endDay, this.endTime);
 
@@ -143,7 +137,7 @@ export default {
                 this.$emit('show-alert', false);
               }, 3000);
             })
-            .catch(err => console.log(err));//todo add error alert
+            .catch(err => console.log(err));
 
         //clear inputs in form
         this.$emit('update', '');

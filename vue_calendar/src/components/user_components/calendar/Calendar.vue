@@ -10,6 +10,7 @@
 
       <transition name="fade" mode="out-in" appear>
         <keep-alive>
+          <!-- event @show-calendar-events is in AddEventForm on the button Back-->
           <component :is="currentOption" @show-calendar-events="showCalendarEvents"/>
         </keep-alive>
       </transition>
@@ -37,6 +38,9 @@ export default {
       this.currentOption = AddEventForm.name;
     },
     showCalendarEvents(created) {
+      // при нажатии на кнопку назад на форме создания нового события происходит следующее:
+      // тут вызывается метод у дочернего компонента для того, чтобы обновить список всех событий из календаря после
+      // создания новых
       if (created) {
         this.$emit('updateEventsTable');
       }

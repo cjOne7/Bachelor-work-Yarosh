@@ -4,7 +4,6 @@ import store from '@/store';
 import Navbar from "@/components/Navbar";
 import Calendar from "@/components/user_components/calendar/Calendar";
 import Profile from "@/components/user_components/Profile";
-// import Jumbotron from "@/components/Jumbotron";
 import Home from "@/components/Home";
 
 Vue.use(VueRouter);
