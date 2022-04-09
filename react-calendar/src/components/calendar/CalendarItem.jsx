@@ -8,7 +8,7 @@ const CalendarItem = ({event}) => {
     const dateFormatter = value => moment(value).format('DD.MM.YYYY HH:mm');
     const trimLongString = value => {
         const MIN_DISPLAYED_LENGTH = 20;
-        return value.length >= MIN_DISPLAYED_LENGTH ? value.slice(0, minDisplayedLength).trim() + "..." : value;
+        return value.length >= MIN_DISPLAYED_LENGTH ? value.slice(0, MIN_DISPLAYED_LENGTH).trim() + "..." : value;
     };
     return (
         <tr>
