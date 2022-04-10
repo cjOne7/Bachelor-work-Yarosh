@@ -18,7 +18,7 @@ const CalendarItem = ({event, saveEventId, popEventId}) => {
     return (
         <>
             <tr onClick={() => setModal(true)}>
-                <td>
+                <td onClick={e => e.stopPropagation()}>
                     <Form.Check type={'checkbox'}
                                 className={'checkbox'}
                                 onChange={(e) => processEventId(e)}
