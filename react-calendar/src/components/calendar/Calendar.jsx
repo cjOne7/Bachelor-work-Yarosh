@@ -1,6 +1,6 @@
 import React from 'react';
 import {Container} from 'react-bootstrap'
-import CalendarTable from "./CalendarTable";
+import CalendarTable from "./calendarTable/CalendarTable";
 
 const Calendar = () => {
     return (
