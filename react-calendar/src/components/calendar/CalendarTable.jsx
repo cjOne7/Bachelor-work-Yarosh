@@ -8,6 +8,8 @@ import CalendarItem from "./CalendarItem";
 import Loader from "../loader/Loader";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import InfoMessage from "../messages/InfoMessage";
+import TableHead from "./TableHead";
+import TableBody from "./TableBody";
 
 class CalendarTable extends React.Component {
     constructor(props) {
@@ -35,7 +37,7 @@ class CalendarTable extends React.Component {
                     this.setState({events: resp.value});
                 });
         } catch (e) {
-            this.setState({loadError: e.message})
+            this.setState({loadError: e.message});
         } finally {
             this.setState({loading: false});
         }
@@ -60,52 +62,38 @@ class CalendarTable extends React.Component {
     };
 
     render() {
-        return (
-            <>
-                {this.state.loading ? <Loader/>
-                    : this.state.events.length
-                        ? <>
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th scope={'col'}></th>
-                                    <th scope={'col'}>Subject</th>
-                                    <th scope={'col'}>Body</th>
-                                    <th scope={'col'}>Organizer</th>
-                                    <th scope={'col'}>Location</th>
-                                    <th scope={'col'}>Start</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {this.state.events.map(event =>
-                                    <CalendarItem event={event}
-                                                  key={event.id}
-                                                  saveEventId={this.saveDeletedId}
-                                                  popEventId={this.popDeletedId}
-                                    />)
-                                }
-                                </tbody>
-                            </table>
-                            <TransitionGroup>
-                                {
-                                    this.state.eventIds.length
-                                    &&
-                                    <CSSTransition timeout={1000} classNames={'button'} mountOnEnter unmountOnExit>
-                                        <div>
-                                            <button className={'btn btn-danger mt-2'}
-                                                    onClick={() => this.deleteChosenEvents()}
-                                            >
-                                                Delete selected elements
-                                            </button>
-                                        </div>
-                                    </CSSTransition>
-                                }
-                            </TransitionGroup>
-                        </>
-                        : <InfoMessage className={'info-message'}>No events!</InfoMessage>
-                }
+        if (this.state.loading) {
+            return <Loader/>;
+        } else if (this.state.events.length) {
+            return <>
+                <table>
+                    <TableHead/>
+                    <TableBody events={this.state.events}
+                               popDeletedId={this.popDeletedId}
+                               saveDeletedId={this.saveDeletedId}
+                    />
+                </table>
+                <TransitionGroup>
+                    {
+                        this.state.eventIds.length
+                        &&
+                        <CSSTransition timeout={1000} classNames={'button'} mountOnEnter unmountOnExit>
+                            <div>
+                                <button className={'btn btn-danger mt-2'}
+                                        onClick={() => this.deleteChosenEvents()}
+                                >
+                                    Delete selected elements
+                                </button>
+                            </div>
+                        </CSSTransition>
+                    }
+                </TransitionGroup>
             </>
-        );
+        } else if (this.state.loadError.length) {
+            return <InfoMessage className={'alert-message'}>{this.state.loadError}</InfoMessage>
+        } else {
+            return <InfoMessage className={'info-message'}>No events!</InfoMessage>;
+        }
     }
 }
 
