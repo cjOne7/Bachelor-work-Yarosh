@@ -1,9 +1,13 @@
 import React from 'react';
 import {connect} from "react-redux";
+import './table.css';
+import '../messages/messages.css';
+import '../../scss/buttonTransition.css';
 import {callMsGraphApi} from "../../store/graph/graphReducer";
 import CalendarItem from "./CalendarItem";
-import './table.css';
 import Loader from "../loader/Loader";
+import {CSSTransition, TransitionGroup} from "react-transition-group";
+import InfoMessage from "../messages/InfoMessage";
 
 class CalendarTable extends React.Component {
     constructor(props) {
@@ -11,11 +15,12 @@ class CalendarTable extends React.Component {
         this.state = {
             events: [],
             eventIds: [],
-            loading: true
+            loading: false,
+            loadError: ''
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         const queryFields = ['subject', 'bodyPreview', 'attendees', 'organizer', 'location', 'start', 'end'];
 
         const queryOptions = {
@@ -23,11 +28,17 @@ class CalendarTable extends React.Component {
             selectedParams: queryFields.join(),
             orderByParams: 'createdDateTime DESC'
         };
-        this.props.callMsGraphApi(queryOptions)
-            .then(resp => {
-                this.setState({events: resp.value});
-                this.setState({loading: false});
-            }).catch(err => console.log(err));
+        try {
+            this.setState({loading: true});
+            await this.props.callMsGraphApi(queryOptions)
+                .then(resp => {
+                    this.setState({events: resp.value});
+                });
+        } catch (e) {
+            this.setState({loadError: e.message})
+        } finally {
+            this.setState({loading: false});
+        }
     }
 
     deleteChosenEvents = async () => {
@@ -41,10 +52,7 @@ class CalendarTable extends React.Component {
         this.setState({events: arr});
     };
 
-    popDeletedId = eventId => {
-        this.setState({eventIds: this.state.eventIds.filter(id => id !== eventId)});
-    };
-
+    popDeletedId = eventId => this.setState({eventIds: this.state.eventIds.filter(id => id !== eventId)});
     saveDeletedId = eventId => {
         if (!this.state.eventIds.includes(eventId)) {
             this.setState({eventIds: [...this.state.eventIds, eventId]});
@@ -69,28 +77,32 @@ class CalendarTable extends React.Component {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {
-                                    this.state.events.map(event =>
-                                        <CalendarItem event={event}
-                                                      key={event.id}
-                                                      saveEventId={this.saveDeletedId}
-                                                      popEventId={this.popDeletedId}
-                                        />)
+                                {this.state.events.map(event =>
+                                    <CalendarItem event={event}
+                                                  key={event.id}
+                                                  saveEventId={this.saveDeletedId}
+                                                  popEventId={this.popDeletedId}
+                                    />)
                                 }
                                 </tbody>
                             </table>
-                            {
-                                this.state.eventIds.length
-                                    ?
-                                    <button className={'btn btn-danger mt-2'}
-                                            onClick={() => this.deleteChosenEvents()}
-                                    >
-                                        Delete selected elements
-                                    </button>
-                                    : <span></span>
-                            }
+                            <TransitionGroup>
+                                {
+                                    this.state.eventIds.length
+                                    &&
+                                    <CSSTransition timeout={1000} classNames={'button'} mountOnEnter unmountOnExit>
+                                        <div>
+                                            <button className={'btn btn-danger mt-2'}
+                                                    onClick={() => this.deleteChosenEvents()}
+                                            >
+                                                Delete selected elements
+                                            </button>
+                                        </div>
+                                    </CSSTransition>
+                                }
+                            </TransitionGroup>
                         </>
-                        : <div><strong style={{fontSize: '1.2em'}}>No events!</strong></div>
+                        : <InfoMessage className={'info-message'}>No events!</InfoMessage>
                 }
             </>
         );
