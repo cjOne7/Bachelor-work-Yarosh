@@ -1,0 +1,10 @@
+.time-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.date-time-picker {
+  min-width: 48%;
+}
+
+/*# sourceMappingURL=inputStyle.css.map */
