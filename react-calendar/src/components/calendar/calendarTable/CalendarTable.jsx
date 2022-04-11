@@ -4,7 +4,6 @@ import './table.css';
 import '../../messages/messages.css';
 import '../../../scss/buttonTransition.css';
 import {callMsGraphApi} from "../../../store/graph/graphReducer";
-import CalendarItem from "./CalendarItem";
 import Loader from "../../loader/Loader";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import InfoMessage from "../../messages/InfoMessage";
@@ -23,19 +22,15 @@ class CalendarTable extends React.Component {
     }
 
     async componentDidMount() {
-        const queryFields = ['subject', 'bodyPreview', 'attendees', 'organizer', 'location', 'start', 'end'];
-
         const queryOptions = {
             path: '/me/events',
-            selectedParams: queryFields.join(),
+            selectedParams: ['subject', 'bodyPreview', 'attendees', 'organizer', 'location', 'start', 'end'],
             orderByParams: 'createdDateTime DESC'
         };
         try {
             this.setState({loading: true});
             await this.props.callMsGraphApi(queryOptions)
-                .then(resp => {
-                    this.setState({events: resp.value});
-                });
+                .then(resp => this.setState({events: resp.value}));
         } catch (e) {
             this.setState({loadError: e.message});
         } finally {
