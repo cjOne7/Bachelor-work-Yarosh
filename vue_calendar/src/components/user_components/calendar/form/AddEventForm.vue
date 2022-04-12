@@ -56,7 +56,6 @@ export default {
       endDay: '',
       endTime: '',
       created: false,
-      // attendees: '',
       event: {
         subject: '',
         body: {
