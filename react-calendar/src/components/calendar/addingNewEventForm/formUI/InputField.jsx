@@ -1,19 +1,15 @@
 import React from 'react';
 import {Form} from "react-bootstrap";
 
-const InputField = (props) => {
+const InputField = ({inputName, inputValue, setInputValue}) => {
     return (
-        <div className={props.className}>
-            <Form.Group className="mb-3" controlId={`${props.inputName}ControlId`}>
-                <Form.Label style={{textTransform: "capitalize"}}>
-                    {props.inputName}
-                </Form.Label>
-                <Form.Control {...props} placeholder={`Enter ${props.inputName}`}/>
-                {props.inputBottomText && <Form.Text className="text-muted">
-                    {props.inputBottomText}
-                </Form.Text>}
-            </Form.Group>
-        </div>
+        <Form.Group className="mb-3" controlId={`${inputName}ControlId`}>
+            <Form.Label style={{textTransform: "capitalize"}}>
+                {inputName}:
+            </Form.Label>
+            <Form.Control placeholder={`Enter ${inputName}`} value={inputValue}
+                          onChange={e => setInputValue(e.target.value)}/>
+        </Form.Group>
     );
 };
 

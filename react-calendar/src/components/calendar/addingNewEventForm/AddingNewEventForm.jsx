@@ -1,163 +1,198 @@
-import React, {useEffect, useState} from 'react';
-import {TransitionGroup, CSSTransition} from 'react-transition-group';
+import React from 'react';
 import '../../../scss/buttonTransition.css';
 import {Form, Button} from 'react-bootstrap';
-import InputField from "./formUI/InputField";
 import './formUI/inputStyle.css';
-import {useSelector} from "react-redux";
+import {connect} from "react-redux";
+import InputField from "./formUI/InputField";
+import DatePicker from "./formUI/DatePicker";
+import TextArea from "./formUI/TextArea";
+import InfoMessage from "../../messages/InfoMessage";
+import "../../messages/messages.css";
 
-const AddingNewEventForm = ({showAddingEventForm}) => {
-    const timeZone = useSelector(state => state.graphReducer.timeZone.value);
-    const graphClient = useSelector(state => state.graphReducer.graphClient);
-    const [event, setEvent] = useState({
-        subject: 'Test sub',
-        location: {
-            displayName: 'Loc'
-        },
-        start: {
-            dateTime: '',
-            timeZone: ''
-        },
-        end: {
-            dateTime: '',
-            timeZone: ''
-        },
-        body: {
-            contentType: 'HTML',
-            content: 'Cont'
+class AddingNewEventForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            created: false,
+            event: {
+                subject: '',
+                location: {
+                    displayName: ''
+                },
+                start: {
+                    dateTime: '',
+                    timeZone: this.props.timeZone
+                },
+                end: {
+                    dateTime: '',
+                    timeZone: this.props.timeZone
+                },
+                body: {
+                    contentType: 'HTML',
+                    content: ''
+                }
+            },
+            startDay: '',
+            startTime: '',
+            endDay: '',
+            endTime: ''
         }
-    });
-    const [startDay, setStartDay] = useState('');
-    const [startTime, setStartTime] = useState('');
-    const [endDay, setEndDay] = useState('');
-    const [endTime, setEndTime] = useState('');
-
-    const buildDate = (day, time) => `${day}T${time}`;
-
-    async function createEvent(e) {
-        e.preventDefault();
-        const start = buildDate(startDay, startTime);
-        const end = buildDate(endDay, endTime);
-
-        console.log("Start: " + start);
-        console.log("End: " + end);
-
-        setEvent({
-            ...event,
-            start: {dateTime: start, timeZone: timeZone},
-            end: {dateTime: end, timeZone: timeZone}
-        });
-        // event.start.timeZone = event.end.timeZone = timeZone;
-        // event.start.dateTime = start;
-        // event.end.dateTime = end;
-
-        console.log(event);
-        // if (event.subject.length) {
-        //     await graphClient.api('/me/events')
-        //         .header('Prefer', `outlook.timezone="${timeZone}"`)
-        //         .post(event)
-        //         .catch(err => console.log(err));
-        // }
     }
 
-    useEffect(() => {
+    getCurrentDayAndTime() {
         const date = new Date();
         const isoDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
         const dateTime = isoDateTime.split('T');
-        const day = dateTime[0];
-        const time = dateTime[1].slice(0, -8);
-        setStartDay(day);
-        setEndDay(day);
-        setStartTime(time);
-        setEndTime(time);
+        return [dateTime[0], dateTime[1].slice(0, -8)];
+    }
 
-        const start = buildDate(startDay, startTime);
-        const end = buildDate(endDay, endTime);
+    componentDidMount() {
+        const [day, time] = this.getCurrentDayAndTime();
+        this.setStartDay(day);
+        this.setEndDay(day);
+        this.setStartTime(time);
+        this.setEndTime(time);
+        this.setStartDate(this.buildDate(day, time));
+        this.setEndDate(this.buildDate(day, time));
+    }
 
-        setEvent({
-            ...event,
-            start: {dateTime: start, timeZone: timeZone},
-            end: {dateTime: end, timeZone: timeZone}
-        });
-    }, []);
+    buildDate = (day, time) => `${day}T${time}`;
 
-    const setBodyContent = e => setEvent({
-        ...event, body:
-            {
-                ...event.body,
-                content: e.target.value
+    setBodyContent = value => this.setState(prevState => ({
+        event: {
+            ...prevState.event,
+            body: {
+                ...prevState.event.body,
+                content: value
             }
-    });
+        }
+    }));
+    setSubject = value => this.setState({
+        event: {
+            ...this.state.event,
+            subject: value
+        }
+    })
+    setLocation = value => this.setState({
+        event: {
+            ...this.state.event,
+            location: {displayName: value}
+        }
+    })
 
-    return (
-        <>
-            <TransitionGroup>
-                <CSSTransition timeout={1000} classNames={'button'}>
-                    <Form>
-                        <Form.Group className="mb-3" controlId="formBasicSubject">
-                            <Form.Label>Subject:</Form.Label>
-                            <Form.Control placeholder="Enter subject" value={event.subject}
-                                          onChange={e => setEvent({...event, subject: e.target.value})}
-                            />
-                        </Form.Group>
+    setEndDate = end => this.setState(prevState => ({
+        event: {
+            ...prevState.event,
+            end: {
+                ...prevState.event.end,
+                dateTime: end
+            }
+        }
+    }));
 
-                        <Form.Group className="mb-3" controlId="formBasicLocation">
-                            <Form.Label>Location:</Form.Label>
-                            <Form.Control placeholder="Enter subject" value={event.location.displayName}
-                                          onChange={e => setEvent({...event, location: {displayName: e.target.value}})}
-                            />
-                        </Form.Group>
+    setEndDay = value => this.setState({endDay: value})
+    setEndTime = value => this.setState({endTime: value})
 
-                        <div className="time-container">
-                            <Form.Group className="mb-3 date-time-picker" controlId="formBasicStartDay">
-                                <Form.Label>Start day:</Form.Label>
-                                <Form.Control type="date" value={startDay}
-                                              onChange={e => setStartDay(e.target.value)}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3 date-time-picker" controlId="formBasicStartTime">
-                                <Form.Label>Start time:</Form.Label>
-                                <Form.Control type="time" value={startTime}
-                                              onChange={e => setStartTime(e.target.value)}
-                                />
-                            </Form.Group>
-                        </div>
-                        <div className="time-container">
-                            <Form.Group className="mb-3 date-time-picker" controlId="formBasicEndDay">
-                                <Form.Label>End day:</Form.Label>
-                                <Form.Control type="date" value={endDay}
-                                              onChange={e => setEndDay(e.target.value)}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3 date-time-picker" controlId="formBasicEndTime">
-                                <Form.Label>End time:</Form.Label>
-                                <Form.Control type="time" value={endTime}
-                                              onChange={e => setEndTime(e.target.value)}
-                                />
-                            </Form.Group>
-                        </div>
+    setStartDate = start => this.setState(prevState => ({
+        event: {
+            ...prevState.event,
+            start: {
+                ...prevState.event.start,
+                dateTime: start
+            }
+        }
+    }))
 
-                        <Form.Group className="mb-3" controlId="formBasicLocation">
-                            <Form.Label>Content:</Form.Label>
-                            <Form.Control placeholder="Enter content" as="textarea" style={{height: '100px'}}
-                                          value={event.body.content}
-                                          onChange={e => setBodyContent(e)}
-                            />
-                        </Form.Group>
-                        <Button variant="primary" type="submit" style={{marginRight: 8}}
-                                onClick={(e) => createEvent(e)}>
-                            Create
-                        </Button>
-                        <Button variant="danger" type="reset" onClick={() => showAddingEventForm(false)}>
-                            Back
-                        </Button>
-                    </Form>
-                </CSSTransition>
-            </TransitionGroup>
-            <div>Start {event.start.dateTime}</div>
-            <div>End {event.end.dateTime}</div>
-        </>
-    );
-};
+    setStartDay = value => this.setState({startDay: value})
+    setStartTime = value => this.setState({startTime: value})
 
-export default AddingNewEventForm;
+    async createEvent(e) {
+        e.preventDefault();
+        const start = this.buildDate(this.state.startDay, this.state.startTime);
+        const end = this.buildDate(this.state.endDay, this.state.endTime);
+
+        this.setState(prevState => ({
+            event: {
+                ...prevState.event,
+                start: {
+                    ...prevState.event.start,
+                    dateTime: start
+                },
+                end: {
+                    ...prevState.event.end,
+                    dateTime: end
+                }
+            }
+        }), async () => {
+            if (this.state.event.subject.length) {
+                await this.props.graphClient.api('/me/events')
+                    .header('Prefer', `outlook.timezone="${this.props.timeZone}"`)
+                    .post(this.state.event)
+                    .then(() => {
+                        this.clearInputs();
+                        this.state.created = true;
+                        setTimeout(() => {
+                            this.state.created = false;
+                        }, 2000);
+                    })
+                    .catch(err => console.log(err));
+            }
+        });
+    }
+
+    clearInputs() {
+        this.setSubject('');
+        this.setLocation('');
+        this.setBodyContent('');
+    }
+
+    render() {
+        let {showAddingEventForm} = this.props;
+
+        return (
+            <>
+                <Form>
+                    <InputField inputName={'subject'} inputValue={this.state.event.subject}
+                                setInputValue={this.setSubject}/>
+                    <InputField inputName={'location'} inputValue={this.state.event.location.displayName}
+                                setInputValue={this.setLocation}/>
+
+                    <div className="time-container">
+                        <DatePicker inputName={'StartDay'} inputLabel={'Start day:'} inputType={'date'}
+                                    inputValue={this.state.startDay} setInputValue={this.setStartDay}/>
+                        <DatePicker inputName={'StartTime'} inputLabel={'Start time:'} inputType={'time'}
+                                    inputValue={this.state.startTime} setInputValue={this.setStartTime}/>
+                    </div>
+                    <div className="time-container">
+                        <DatePicker inputName={'EndDay'} inputLabel={'End day:'} inputType={'date'}
+                                    inputValue={this.state.endDay} setInputValue={this.setEndDay}/>
+                        <DatePicker inputName={'EndTime'} inputLabel={'End time:'} inputType={'time'}
+                                    inputValue={this.state.endTime} setInputValue={this.setEndTime}/>
+                    </div>
+
+                    <TextArea inputName={'Content'} inputValue={this.state.event.body.content}
+                              setInputValue={this.setBodyContent}/>
+                    <Button variant="primary" type="submit" style={{marginRight: 8}}
+                            onClick={e => this.createEvent(e)}>
+                        Create
+                    </Button>
+                    <Button variant="danger" type="reset" onClick={() => showAddingEventForm(false)}>
+                        Back
+                    </Button>
+                </Form>
+                {
+                    !this.state.created ?
+                        <InfoMessage className={'info-message'}>Event has been successfully created!</InfoMessage> :
+                        <span></span>
+                }
+            </>
+        );
+    }
+}
+
+const mapStateToProps = state => ({
+    graphClient: state.graphReducer.graphClient,
+    timeZone: state.graphReducer.timeZone.value
+})
+
+export default connect(mapStateToProps, null)(AddingNewEventForm);

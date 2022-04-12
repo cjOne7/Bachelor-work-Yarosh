@@ -6,6 +6,7 @@ import TableHead from "./TableHead";
 import TableBody from "./TableBody";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import InfoMessage from "../../messages/InfoMessage";
+import "../../messages/messages.css";
 
 const TableCalendar = () => {
     const dispatch = useDispatch();

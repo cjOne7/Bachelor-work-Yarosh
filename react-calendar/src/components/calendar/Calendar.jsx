@@ -4,7 +4,6 @@ import CalendarTable from "./calendarTable/CalendarTable";
 import TableCalendar from "./calendarTable/TableCalendar";
 import {TransitionGroup, CSSTransition} from 'react-transition-group';
 import '../../scss/buttonTransition.css';
-import InfoMessage from "../messages/InfoMessage";
 import AddingNewEventForm from "./addingNewEventForm/AddingNewEventForm";
 
 const Calendar = () => {
@@ -27,9 +26,8 @@ const Calendar = () => {
                 }
             </TransitionGroup>
             {showAddingEventForm
-                ?
-                <AddingNewEventForm showAddingEventForm={setShowAddingEventForm}/>
-                : <div>Calendar table</div>}
+                ? <AddingNewEventForm showAddingEventForm={setShowAddingEventForm}/>
+                : <CalendarTable/>}
 
             {/*<CalendarTable/>*/}
             {/*<TableCalendar/>*/}
