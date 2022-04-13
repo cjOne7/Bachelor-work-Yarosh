@@ -8,6 +8,7 @@ import DatePicker from "./formUI/DatePicker";
 import TextArea from "./formUI/TextArea";
 import InfoMessage from "../../messages/InfoMessage";
 import "../../messages/messages.css";
+import {CSSTransition, TransitionGroup} from "react-transition-group";
 
 class AddingNewEventForm extends React.Component {
     constructor(props) {
@@ -130,9 +131,9 @@ class AddingNewEventForm extends React.Component {
                     .post(this.state.event)
                     .then(() => {
                         this.clearInputs();
-                        this.state.created = true;
+                        this.setState({created: true});
                         setTimeout(() => {
-                            this.state.created = false;
+                            this.setState({created: false});
                         }, 2000);
                     })
                     .catch(err => console.log(err));
@@ -180,11 +181,16 @@ class AddingNewEventForm extends React.Component {
                         Back
                     </Button>
                 </Form>
-                {
-                    !this.state.created ?
-                        <InfoMessage className={'info-message'}>Event has been successfully created!</InfoMessage> :
-                        <span></span>
-                }
+                <TransitionGroup>
+                    {
+                        this.state.created &&
+                        <CSSTransition timeout={1000} classNames={'button'}>
+                            <InfoMessage className={'info-message'}>Event has been successfully
+                                created!</InfoMessage>
+                        </CSSTransition>
+                    }
+                </TransitionGroup>
+
             </>
         );
     }
