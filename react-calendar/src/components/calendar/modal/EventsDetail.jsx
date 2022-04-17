@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal, Button, Container, Row, Col} from 'react-bootstrap';
+import {Modal, Button, Container} from 'react-bootstrap';
 import EventsDetailField from "./EventsDetailField";
 import {checkForEmpty, dateFormatter, trimAttendees} from "../filters";
 
