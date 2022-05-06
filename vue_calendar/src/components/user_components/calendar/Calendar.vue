@@ -67,17 +67,12 @@ table {
       background-color : white;
     }
 
-    &:nth-child(even) {
-      //background-color : antiquewhite;
-    }
-
     &:hover {
       background-color : #deeef3;
     }
   }
 
   th {
-    //background-color : antiquewhite;
     border  : $border;
     padding : $indent;
   }
