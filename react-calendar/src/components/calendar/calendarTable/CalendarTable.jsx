@@ -22,7 +22,13 @@ class CalendarTable extends React.Component {
     async componentDidMount() {
         const queryOptions = {
             path: '/me/events',
-            selectedParams: ['subject', 'bodyPreview', 'attendees', 'organizer', 'location', 'start', 'end'],
+            selectedParams: ['subject'
+                , 'bodyPreview'
+                , 'attendees'
+                , 'organizer'
+                , 'location'
+                , 'start'
+                , 'end'],
             orderByParams: 'createdDateTime DESC'
         };
         try {
@@ -40,7 +46,9 @@ class CalendarTable extends React.Component {
         let arr = this.state.events;
         for (let i = 0; i < this.state.eventIds.length; i++) {
             const eventId = this.state.eventIds[i];
-            await this.props.graphClient.api(`/me/events/${eventId}`).delete();
+            await this.props.graphClient
+                .api(`/me/events/${eventId}`)
+                .delete();
             arr = arr.filter(event => event.id !== eventId);
         }
         this.setState({eventIds: []});
