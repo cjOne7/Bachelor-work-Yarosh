@@ -4,8 +4,8 @@ import {callMsGraphApi} from "../../../store/graph/graphReducer";
 import Loader from "../../loader/Loader";
 import TableHead from "./TableHead";
 import TableBody from "./TableBody";
-import {CSSTransition, TransitionGroup} from "react-transition-group";
 import InfoMessage from "../../messages/InfoMessage";
+import {CSSTransition, TransitionGroup} from "react-transition-group";
 import "../../messages/messages.css";
 
 const TableCalendar = () => {
