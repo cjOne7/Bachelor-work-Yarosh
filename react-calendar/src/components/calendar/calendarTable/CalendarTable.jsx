@@ -1,14 +1,12 @@
 import React from 'react';
 import {connect} from "react-redux";
-import './table.css';
-import '../../messages/messages.css';
-import '../../../scss/buttonTransition.css';
 import {callMsGraphApi} from "../../../store/graph/graphReducer";
 import Loader from "../../loader/Loader";
-import {CSSTransition, TransitionGroup} from "react-transition-group";
-import InfoMessage from "../../messages/InfoMessage";
 import TableHead from "./TableHead";
 import TableBody from "./TableBody";
+import InfoMessage from "../../messages/InfoMessage";
+import {CSSTransition, TransitionGroup} from "react-transition-group";
+import '../../messages/messages.css';
 
 class CalendarTable extends React.Component {
     constructor(props) {
