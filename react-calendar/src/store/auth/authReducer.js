@@ -33,9 +33,7 @@ export const authReducer = (state = initialState, action) => {
         case SET_IS_AUTH:
             return {...state, isAuthenticated: !state.isAuthenticated}
         case SIGN_OUT:
-            return {
-                ...state
-            }
+            return {...state}
         default:
             return state;
     }
