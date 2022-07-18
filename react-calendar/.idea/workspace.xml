@@ -20,8 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f4cf8187-145b-4edd-a90e-7e7397ae0e4d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/RequireAuth.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RequireAuth.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/auth/authReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/auth/authReducer.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +80,7 @@
       <workItem from="1652820342609" duration="302000" />
       <workItem from="1654979478928" duration="3489000" />
       <workItem from="1657197589894" duration="677000" />
-      <workItem from="1658164932482" duration="1761000" />
+      <workItem from="1658164932482" duration="2111000" />
     </task>
     <servers />
   </component>
